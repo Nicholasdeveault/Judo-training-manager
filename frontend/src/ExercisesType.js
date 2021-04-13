@@ -30,6 +30,7 @@ useEffect(() => {
       });
   }, [dispatch]);
 // console.log(exercisesData);
+
   return exercisesData ? (
     <Wrapper>
       {exercisesData?.exercises?.map((exercise) => {

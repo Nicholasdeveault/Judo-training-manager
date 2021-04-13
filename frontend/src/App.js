@@ -6,17 +6,21 @@ import {
   Redirect,
 } from "react-router-dom";
 import styled from "styled-components";
+import GlobalStyles from "./GlobalStyles";
 import Homepage from "./Homepage";
 import AllExercises from "./Exercises";
 import ExercisesType from "./ExercisesType";
+import Header from "./Header";
+import Footer from "./Footer";
 
 const App = () => {
   return (
     <>
-      {/* <GlobalStyles /> */}
+      <GlobalStyles />
       <Router>
+        <Header />
         <Switch>
-        <Route exact path="/Homepage">
+        <Route exact path="/">
             <Homepage />
           </Route>
           <Route exact path="/Exercises/:type">
@@ -26,6 +30,7 @@ const App = () => {
               <AllExercises />
           </Route>
         </Switch>
+        <Footer />
       </Router>
     </>
   );
