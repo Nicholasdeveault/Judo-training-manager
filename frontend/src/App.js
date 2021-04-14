@@ -1,4 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  requestExercisesInfo,
+  receiveExercisesInfo,
+  receiveExercisesInfoError,
+} from "./actions";
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,22 +18,46 @@ import AllExercises from "./Exercises";
 import ExercisesType from "./ExercisesType";
 import Header from "./Header";
 import Footer from "./Footer";
+import Workout from "./Workout";
+// import ExercisesTypesArray from "./ExercisesTypesArray";
 
 const App = () => {
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+
+  useEffect(() => {
+    dispatch(requestExercisesInfo());
+
+    fetch("/Exercises")
+      .then((res) => res.json())
+      .then((json) => {
+        dispatch(receiveExercisesInfo(json));
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch(receiveExercisesInfoError());
+      });
+  }, [dispatch]);
+
   return (
     <>
       <GlobalStyles />
       <Router>
         <Header />
         <Switch>
-        <Route exact path="/">
+          <Route exact path="/test">
+            <Workout />
+            {/* <ExercisesTypesArray /> */}
+          </Route>
+          <Route exact path="/">
             <Homepage />
+            {/* <ExercisesTypesArray /> */}
           </Route>
           <Route exact path="/Exercises/:type">
             <ExercisesType />
           </Route>
           <Route exact path="/Exercises">
-              <AllExercises />
+            <AllExercises />
           </Route>
         </Switch>
         <Footer />

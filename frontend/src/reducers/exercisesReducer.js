@@ -1,6 +1,6 @@
 const initialState = {
   exercises: null,
-  status: "idle",
+  status: "hasen't loaded",
 };
 
 export default function exercisesReducer(state = initialState, action) {

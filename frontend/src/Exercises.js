@@ -15,20 +15,6 @@ const dispatch = useDispatch();
 const state = useSelector((state) => state);
 const exercisesData = useSelector(getExercisesDataArray);
 
-
-useEffect(() => {
-    dispatch(requestExercisesInfo());
-
-    fetch("/Exercises")
-      .then((res) => res.json())
-      .then((json) => {
-        dispatch(receiveExercisesInfo(json));
-      })
-      .catch((err) => {
-        console.log(err);
-        dispatch(receiveExercisesInfoError());
-      });
-  }, [dispatch]);
 // console.log(exercisesData);
 
 let newExerciseArray = [];

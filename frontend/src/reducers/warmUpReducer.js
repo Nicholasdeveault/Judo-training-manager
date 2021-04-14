@@ -1,6 +1,10 @@
 const initialState = {
-    type: {},
-    status: "idle",
+    warmUp: {
+      Cardio: {isSelected: false},
+      "Educatifs musculaires" : {isSelected: false},
+    },
+    principalPart: {},
+    status: "hasen't loaded",
   };
   
   export default function typeReducer(state = initialState, action) {

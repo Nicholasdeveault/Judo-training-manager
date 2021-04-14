@@ -27,3 +27,17 @@ export const requestExercisesInfo = () => ({
   export const receiveExercisesTypeInfoError = () => ({
     type: "RECEIVE_EXERCISESTYPE_INFO_ERROR",
   });
+
+  // //PrincipalPartReducer
+  // export const requestExercisesTypeInfo = () => ({
+  //   type: "REQUEST_EXERCISESTYPE_INFO",
+  // });
+  
+  // export const receiveExercisesTypeInfo = (type) => ({
+  //   type: "RECEIVE_EXERCISESTYPE_INFO",
+  //   type,
+  // });
+  
+  // export const receiveExercisesTypeInfoError = () => ({
+  //   type: "RECEIVE_EXERCISESTYPE_INFO_ERROR",
+  // });

@@ -11,88 +11,89 @@ import {
   receiveExercisesInfoError,
 } from "./actions";
 import { getExercisesDataArray } from "./reducers/exercisesReducer";
-
+import Workout from "./Workout";
 
 const Homepage = () => {
-const dispatch = useDispatch();
-const state = useSelector((state) => state);
-const exercisesData = useSelector(getExercisesDataArray);
-const [startDate, setStartDate] = useState(null);
-const [endDate, setEndDate] = useState(null);
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+  const exercisesData = useSelector(getExercisesDataArray);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
-//useState to do a counter && Object.Values
-// const [time, setTime] = useState({});
+  //useState to do a counter && Object.Values
+  // const [time, setTime] = useState({});
 
-let exercise = [];
+  let exercise = [];
 
-const handleTime = () => {
-          {moment(exercise.timestamp).format("h:mm a • MMMM Do YYYY")};
-        console.log("HI", moment(exercise.timestamp).format("h:mm a • MMMM Do YYYY"));
-}
+  const handleTime = () => {
+    {
+      moment(exercise.timestamp).format("h:mm a • MMMM Do YYYY");
+    }
+    console.log(
+      "HI",
+      moment(exercise.timestamp).format("h:mm a • MMMM Do YYYY")
+    );
+  };
 
-useEffect(() => {
-    dispatch(requestExercisesInfo());
+  // console.log(exercisesData);
 
-    fetch("/Homepage")
-      .then((res) => res.json())
-      .then((json) => {
-        dispatch(receiveExercisesInfo(json));
-      })
-      .catch((err) => {
-        console.log(err);
-        dispatch(receiveExercisesInfoError());
-      });
-  }, [dispatch]);
-// console.log(exercisesData);
+  let newExerciseArray = [];
 
-let newExerciseArray = [];
-
-if (exercisesData.exercises) {
-  exercisesData.exercises.map((exercise) => {
-    newExerciseArray.push(exercise.type);
-  })
-}
-newExerciseArray = newExerciseArray.filter((item, index) => {
-  return newExerciseArray.indexOf(item) === index;
-});
-
+  if (exercisesData.exercises) {
+    exercisesData.exercises.map((exercise) => {
+      newExerciseArray.push(exercise.type);
+    });
+  }
+  newExerciseArray = newExerciseArray.filter((item, index) => {
+    return newExerciseArray.indexOf(item) === index;
+  });
 
   return exercisesData ? (
     <Wrapper>
       <DatePicker
-       placeholderText="Select Training Day"
-       showTimeSelect
-       dateFormat="MMMM d, yyyy h:mmaa"
-       selected={endDate}
-       selectsEnd
-       startDate={startDate}
-       endDate={endDate}
-       minDate={startDate}
-       onChange={date => setEndDate(date)}
-     />
+        placeholderText="Select Training Day"
+        showTimeSelect
+        dateFormat="MMMM d, yyyy h:mmaa"
+        selected={endDate}
+        selectsEnd
+        startDate={startDate}
+        endDate={endDate}
+        minDate={startDate}
+        onChange={(date) => setEndDate(date)}
+      />
+
       {newExerciseArray?.map((exercise) => {
-          return <div>
+        return (
+          <div>
             <H1>{exercise}</H1>
             <DivExercises>
-            {exercisesData?.exercises?.map((Ex) => {
-              if(Ex.type === exercise) {
-              return <>
-              <div><InputTime type="text"/></div> 
-              <div><Input type="checkbox" onClick={Ex.name}/>{Ex.name}</div>
-              </>
-            }
-            })}
+              {exercisesData?.exercises?.map((Ex) => {
+                if (Ex.type === exercise) {
+                  return (
+                    <>
+                      <div>
+                        <InputTime type="text" />
+                      </div>
+                      <div>
+                        <Input type="checkbox" onClick={Ex.name} />
+                        {Ex.name}
+                      </div>
+                    </>
+                  );
+                }
+              })}
             </DivExercises>
-            </div>
-})}
+          </div>
+        );
+      })}
 
-{/* Anonymous function */}
-<Button onClick={handleTime}>Confirm today's training</Button>
+      {/* Anonymous function */}
+      <Button onClick={handleTime}>Confirm today's training</Button>
     </Wrapper>
   ) : (
     <div>Loading...</div>
-  )
-}
+  );
+};
 
 const Wrapper = styled.div``;
 

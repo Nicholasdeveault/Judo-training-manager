@@ -15,7 +15,7 @@ express()
 
 //endpoints\
 //Login page .get()
-.get("/Homepage",  getAllExercises) //<-- Homepage to plan the training of the day 
+// .get("/Homepage",  getAllExercises) //<-- Homepage to plan the training of the day 
 .get("/Exercises", getAllExercises) //<-- page to see every exercises
 .get("/Exercises/:type", getExercisesByType) //<-- Page to search by type
 .get("/Exercises/:_id", getExercises)  //<-- Might not need this one
