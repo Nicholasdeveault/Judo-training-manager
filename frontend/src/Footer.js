@@ -42,21 +42,6 @@ const Footer = () => {
     }
   };
 
-  //add useEffect and fetch for a .get()
-  // useEffect(() => {
-  //   console.log("Before fetch");
-  //   try {
-  //     fetch("/notes")
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         newNote(data);
-  //         console.log("Hell0", data);
-  //       });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }, []);
-
   //Need to add the Note printed out on the bottom of the page.
 
   return newNote ? (

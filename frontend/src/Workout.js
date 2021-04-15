@@ -1,82 +1,25 @@
 import React, { useEffect, useState, useReducer } from "react";
 import moment from "moment";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
-import { getExercisesTypeData } from "./reducers/warmUpReducer";
-
-//   function reducer(state, action) {
-//     switch (action.type) {
-//       case "Cardio":
-//         return { isSelected: state.false };
-
-//     case "Educatifs musculaires" :
-//         return { state.isSelected: false }
-
-//     case "Educatifs coordination" :
-//         return { state.isSelected: false }
-
-//     case "Travail global" :
-//         return { state.isSelected: false }
-
-//     case "Chutes" :
-//         return { state.isSelected: false }
-
-//     case "Retournements" :
-//         return { state.isSelected: false }
-
-//     case "Cardio" :
-//         return { state.isSelected: false }
-
-//     case "Ukemi (chutes)" :
-//          return { state.isSelected: false }
-
-//     case "Nage-waza (projections)" :
-//         return { state.isSelected: false }
-
-//     case "Kumi-Kata (garde)" :
-//         return { state.isSelected: false }
-
-//     case "Osae-waza (immobilisations)" :
-//          return { state.isSelected: false }
-
-//     case "Hairi-Kata (renversements)" :
-//          return { state.isSelected: false }
-
-//     case "Terminologie" :
-//          return { state.isSelected: false }
-//       };
-//     }
-//     case principalPart: {
-//     }
-//     status: "hasen't loaded",
-// }
-//   }
+import { useDispatch, useSelector } from "react-redux";
+import {
+  requestExercisesTypeInfo,
+  receiveExercisesTypeInfo,
+  receiveExercisesTypeInfoError,
+} from "./actions";
+import { getExercisesTypeData } from "./reducers/selectedWorkoutReducer";
 
 const Workout = () => {
   //   const [state, dispatch] = useReducer(reducer, { isSelected: false });
+  const dispatch = useDispatch();
+  const exerciseSelection = useSelector((state) => state);
   const [warmUp, setWarmup] = useState("none");
   const [name, setName] = useState("none");
   const [name2, setName2] = useState("none");
   const [sequence, setSequence] = useState("none");
-  // const [workoutSelection, setWorkoutSelection] = useState({
-  //   warmUp: {
-  //     Cardio: { isSelected: false },
-  //     "Educatifs musculaires": { isSelected: false },
-  //     "Educatifs coordination": { isSelected: false },
-  //     "Travail global": { isSelected: false },
-  //     Chutes: { isSelected: false },
-  //     Retournements: { isSelected: false },
-  //     "Tandoku-renshu": { isSelected: false },
-  //     "Ukemi (chutes)": { isSelected: false },
-  //     "Nage-waza (projections)": { isSelected: false },
-  //     "Kumi-Kata (garde)": { isSelected: false },
-  //     "Osae-waza (immobilisations)": { isSelected: false },
-  //     "Hairi-Kata (renversements)": { isSelected: false },
-  //     Terminologie: { isSelected: false },
-  //   },
-  //   principalPart: {},
-  //   status: "hasen't loaded",
-  // });
+  const [warmupTime, setWarmupTime] = useState(0);
+  const [time, setTime] = useState(0);
+  const [date, setDate] = useState("");
 
   const exercises = useSelector((state) => state.exercises);
   console.log(exercises);
@@ -100,24 +43,9 @@ const Workout = () => {
   });
   console.log(cardioExercises);
 
-  // const handleWarmUpChange = (event) => {
-  //   // dispatch({ type: "Cardio", payload: { } });
-  //   console.log(event.target.checked);
-  //   console.log(event.target.name);
-  //   setWorkoutSelection({
-  //     ...workoutSelection,
-  //     warmUp: {
-  //       ...workoutSelection.warmUp,
-  //       [event.target.name]: { isSelected: event.target.checked },
-  //     },
-  //   });
+  // const handleSubmit = (event) => {
+  //   return event.target.submit;
   // };
-
-  //const handleWarmUpExercisesChange = () => {};
-
-  const handleSubmit = (event) => {
-    return event.target.submit;
-  };
   console.log(warmUp);
   return exercises.status === "idle" ? (
     <>
@@ -153,7 +81,34 @@ const Workout = () => {
               return <Option value={name}>{name}</Option>;
             })}
           </Select>
-          <Button onClick={handleSubmit}>Add to today's training</Button>
+          <Div>
+            <Label for="Duration">Exercise duration: </Label>
+            {/*for time --> useState/setState && value={} */}
+            <Input
+              type="text"
+              value={warmupTime}
+              name="Duration"
+              rows="1"
+              cols="2"
+              onChange={(event) => setWarmupTime(event.target.value)}
+            />
+            <Button
+              onClick={() => {
+                console.log("Hello");
+                const exerciseInfo = {
+                  type: "add_warmup_ex",
+                  payload: {
+                    warmupType: warmUp,
+                    warmupEx: name,
+                    exTime: warmupTime,
+                  },
+                };
+                dispatch(exerciseInfo);
+              }}
+            >
+              Add to today's training
+            </Button>
+          </Div>
         </FormWarmUp>
 
         {/* Form for sequences */}
@@ -184,112 +139,35 @@ const Workout = () => {
               return <Option value={name}>{name}</Option>;
             })}
           </Select>
-          <Button onClick={handleSubmit}>Add to today's training</Button>
+          <Div>
+            <Label for="Duration">Exercise duration: </Label>
+            <Input
+              type="text"
+              value={time}
+              name="Duration"
+              rows="1"
+              cols="2"
+              onChange={(event) => setTime(event.target.value)}
+            />
+            <Button
+              onClick={() => {
+                console.log("Hello");
+                const exerciseInfo = {
+                  type: "add_mainpart_ex",
+                  payload: {
+                    trainingType: sequence,
+                    trainingEx: name,
+                    exTime: time,
+                  },
+                };
+                dispatch(exerciseInfo);
+              }}
+            >
+              Add to today's training
+            </Button>
+          </Div>
         </FormMainTraining>
       </Container>
-
-      {/* <form>
-        
-        <label htmlFor="Cardio">Cardio</label>
-        <input
-          type="checkbox"
-          name="Cardio"
-          //   checked={state.Cardio.isSelected}
-          checked={workoutSelection.warmUp.Cardio.isSelected}
-          onChange={handleWarmUpChange}
-        />
-        <label htmlFor="Educatifs musculaires">Educatifs musculaires</label>
-        <input
-          type="checkbox"
-          name="Educatifs musculaires"
-          checked={workoutSelection.warmUp["Educatifs musculaires"].isSelected}
-          onChange={handleWarmUpChange}
-        />
-        <label htmlFor="Educatifs coordination">Educatifs coordiantion</label>
-        <input
-          type="checkbox"
-          name="Educatifs coordination"
-          checked={workoutSelection.warmUp["Educatifs coordination"].isSelected}
-          onChange={handleWarmUpChange}
-        />
-        <label htmlFor="Travail global">Travail global</label>
-        <input
-          type="checkbox"
-          name="Travail global"
-          checked={workoutSelection.warmUp["Travail global"].isSelected}
-          onChange={handleWarmUpChange}
-        />
-        <label htmlFor="Chutes">Chutes</label>
-        <input
-          type="checkbox"
-          name="Chutes"
-          checked={workoutSelection.warmUp.Chutes.isSelected}
-          onChange={handleWarmUpChange}
-        />
-        <label htmlFor="Retournements">Retournements</label>
-        <input
-          type="checkbox"
-          name="Retournements"
-          checked={workoutSelection.warmUp.Retournements.isSelected}
-          onChange={handleWarmUpChange}
-        />
-        <label htmlFor="Tandoku-renshu">Tandoku-renshu</label>
-        <input
-          type="checkbox"
-          name="Tandoku-renshu"
-          checked={workoutSelection.warmUp["Tandoku-renshu"].isSelected}
-          onChange={handleWarmUpChange}
-        />
-        <label htmlFor="Ukemi (chutes)">Ukemi</label>
-        <input
-          type="checkbox"
-          name="Ukemi (chutes)"
-          checked={workoutSelection.warmUp["Ukemi (chutes)"].isSelected}
-          onChange={handleWarmUpChange}
-        />
-        <label htmlFor="Nage-waza (projections)">Nage-waza</label>
-        <input
-          type="checkbox"
-          name="Nage-waza (projections)"
-          checked={
-            workoutSelection.warmUp["Nage-waza (projections)"].isSelected
-          }
-          onChange={handleWarmUpChange}
-        />
-        <label htmlFor="Kumi-Kata (garde)">Kumi-Kata</label>
-        <input
-          type="checkbox"
-          name="Kumi-Kata (garde)"
-          checked={workoutSelection.warmUp["Kumi-Kata (garde)"].isSelected}
-          onChange={handleWarmUpChange}
-        />
-        <label htmlFor="Osae-waza (immobilisations)">Osae-waza</label>
-        <input
-          type="checkbox"
-          name="Osae-waza (immobilisations)"
-          checked={
-            workoutSelection.warmUp["Osae-waza (immobilisations)"].isSelected
-          }
-          onChange={handleWarmUpChange}
-        />
-        <label htmlFor="Hairi-Kata (renversements)">Hairi-Kata</label>
-        <input
-          type="checkbox"
-          name="Hairi-Kata (renversements)"
-          checked={
-            workoutSelection.warmUp["Hairi-Kata (renversements)"].isSelected
-          }
-          onChange={handleWarmUpChange}
-        />
-        <label htmlFor="Terminologie">Terminologie</label>
-        <input
-          type="checkbox"
-          name="Terminologie"
-          checked={workoutSelection.warmUp.Terminologie.isSelected}
-          onChange={handleWarmUpChange}
-        /> */}
-      {/* {cardioExercises.map((exercise) => {})} */}
-      {/* </form> */}
     </>
   ) : (
     <div>Loading...</div>
@@ -305,12 +183,28 @@ const Container = styled.div`
   margin-left: 60px;
 `;
 
+const Label = styled.label`
+  font-weight: bold;
+  font-size: 14px;
+  border-bottom: 2px solid gray;
+`;
+
+const Input = styled.input`
+  margin-left: 15px;
+  width: 45px;
+`;
+
+const Div = styled.div`
+  display: flex;
+`;
+
 const Button = styled.button`
   height: 25px;
   color: black;
   background-color: white;
   border: 2px solid gray;
   border-radius: 5px;
+  margin-left: 70px;
 
   &:hover {
     background-color: gray;
@@ -319,14 +213,14 @@ const Button = styled.button`
   }
 `;
 
-const FormWarmUp = styled.form`
+const FormWarmUp = styled.div`
   margin-top: 20px;
   margin-bottom: 100px;
   padding-bottom: 100px;
   border-bottom: 2px solid gray;
 `;
 
-const FormMainTraining = styled.form`
+const FormMainTraining = styled.div`
   /* border: 2px solid red; */
 `;
 
