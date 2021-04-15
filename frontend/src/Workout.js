@@ -56,26 +56,27 @@ const Workout = () => {
   //   const [state, dispatch] = useReducer(reducer, { isSelected: false });
   const [warmUp, setWarmup] = useState("none");
   const [name, setName] = useState("none");
+  const [name2, setName2] = useState("none");
   const [sequence, setSequence] = useState("none");
-  const [workoutSelection, setWorkoutSelection] = useState({
-    warmUp: {
-      Cardio: { isSelected: false },
-      "Educatifs musculaires": { isSelected: false },
-      "Educatifs coordination": { isSelected: false },
-      "Travail global": { isSelected: false },
-      Chutes: { isSelected: false },
-      Retournements: { isSelected: false },
-      "Tandoku-renshu": { isSelected: false },
-      "Ukemi (chutes)": { isSelected: false },
-      "Nage-waza (projections)": { isSelected: false },
-      "Kumi-Kata (garde)": { isSelected: false },
-      "Osae-waza (immobilisations)": { isSelected: false },
-      "Hairi-Kata (renversements)": { isSelected: false },
-      Terminologie: { isSelected: false },
-    },
-    principalPart: {},
-    status: "hasen't loaded",
-  });
+  // const [workoutSelection, setWorkoutSelection] = useState({
+  //   warmUp: {
+  //     Cardio: { isSelected: false },
+  //     "Educatifs musculaires": { isSelected: false },
+  //     "Educatifs coordination": { isSelected: false },
+  //     "Travail global": { isSelected: false },
+  //     Chutes: { isSelected: false },
+  //     Retournements: { isSelected: false },
+  //     "Tandoku-renshu": { isSelected: false },
+  //     "Ukemi (chutes)": { isSelected: false },
+  //     "Nage-waza (projections)": { isSelected: false },
+  //     "Kumi-Kata (garde)": { isSelected: false },
+  //     "Osae-waza (immobilisations)": { isSelected: false },
+  //     "Hairi-Kata (renversements)": { isSelected: false },
+  //     Terminologie: { isSelected: false },
+  //   },
+  //   principalPart: {},
+  //   status: "hasen't loaded",
+  // });
 
   const exercises = useSelector((state) => state.exercises);
   console.log(exercises);
@@ -84,15 +85,15 @@ const Workout = () => {
     return exercise.type;
   });
 
+  let filteredTypes = types?.filter((item, index) => {
+    return types?.indexOf(item) === index;
+  });
+  console.log(filteredTypes);
+
   let names = exercises?.exercises?.map((exercise) => {
     return exercise.name;
   });
   console.log(names);
-
-  let filteredTypes = types.filter((item, index) => {
-    return types.indexOf(item) === index;
-  });
-  console.log(filteredTypes);
 
   const cardioExercises = exercises?.exercises?.filter((exercise) => {
     return exercise.type === "Cardio";
@@ -120,64 +121,72 @@ const Workout = () => {
   console.log(warmUp);
   return exercises.status === "idle" ? (
     <>
-      {/* Form for WarmUp portion */}
+      <Container>
+        {/* Form for WarmUp portion */}
 
-      <Form>
-        <h1>Warm up</h1>
-        <select
-          name="WarmUp"
-          value={warmUp}
-          onChange={(event) => setWarmup(event.target.value)}
-        >
-          <option value="none">Select a type</option>
-          {filteredTypes?.map((type) => {
-            return <option value="type">{type}</option>;
-          })}
-        </select>
-        <select
-          name="WarmUp"
-          value={name}
-          onChange={(event) => setName(event.target.value)}
-        >
-          {warmUp === "none" ? (
-            <option value="none">First select a workout type</option>
-          ) : (
-            <option value="none">Select an exercise</option>
-          )}
-          {names?.map((name) => {
-            return <option value="name">{name}</option>;
-          })}
-        </select>
-        <Button onClick={handleSubmit}>Add to today's training</Button>
-      </Form>
+        <FormWarmUp>
+          <H1>Warm up: </H1>
+          <Select
+            name="WarmUp"
+            value={warmUp}
+            onChange={(event) => {
+              console.log(event.target);
+              setWarmup(event.target.value);
+            }}
+          >
+            <Option value="none">Select a type</Option>
+            {filteredTypes?.map((type) => {
+              return <Option value={type}>{type}</Option>;
+            })}
+          </Select>
+          <Select
+            name="WarmUp"
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+          >
+            {warmUp === "none" ? (
+              <Option value="none">First select a workout type</Option>
+            ) : (
+              <Option value="none">Select an exercise</Option>
+            )}
+            {names?.map((name) => {
+              return <Option value={name}>{name}</Option>;
+            })}
+          </Select>
+          <Button onClick={handleSubmit}>Add to today's training</Button>
+        </FormWarmUp>
 
-      {/* Form for sequences */}
+        {/* Form for sequences */}
 
-      <Form>
-        <h1>Main Training</h1>
-        <select
-          name="Sequences"
-          value={sequence}
-          onChange={(event) => setSequence(event.target.value)}
-        >
-          <option value="none">Select a sequence</option>
-        </select>
-        <select
-          name="Sequences"
-          value={name}
-          onChange={(event) => setName(event.target.value)}
-        >
-          {warmUp === "none" ? (
-            <option value="none">First select a sequence</option>
-          ) : (
-            <option value="none">Select an exercise</option>
-          )}
-          {names?.map((name) => {
-            return <option value="name">{name}</option>;
-          })}
-        </select>
-        <Button onClick={handleSubmit}>Add to today's training</Button>
-      </Form>
+        <FormMainTraining>
+          <H1>Main Training: </H1>
+          <Select
+            name="Sequences"
+            value={sequence}
+            onChange={(event) => setSequence(event.target.value)}
+          >
+            <Option value="none">Select a sequence</Option>
+            {filteredTypes?.map((type) => {
+              return <Option value={type}>{type}</Option>;
+            })}
+          </Select>
+          <Select
+            name="Sequences"
+            value={name2}
+            onChange={(event) => setName2(event.target.value)}
+          >
+            {warmUp === "none" ? (
+              <Option value="none">First select a sequence</Option>
+            ) : (
+              <Option value="none">Select an exercise</Option>
+            )}
+            {names?.map((name) => {
+              return <Option value={name}>{name}</Option>;
+            })}
+          </Select>
+          <Button onClick={handleSubmit}>Add to today's training</Button>
+        </FormMainTraining>
+      </Container>
 
       {/* <form>
         
@@ -287,10 +296,59 @@ const Workout = () => {
   );
 };
 
-const Button = styled.button``;
+const Container = styled.div`
+  /* border: 2px solid blue; */
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  height: 1000px;
+  margin-left: 60px;
+`;
 
-const Form = styled.form`
-  border: 2px solid red;
+const Button = styled.button`
+  height: 25px;
+  color: black;
+  background-color: white;
+  border: 2px solid gray;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: gray;
+    color: white;
+    transition: 300ms;
+  }
+`;
+
+const FormWarmUp = styled.form`
+  margin-top: 20px;
+  margin-bottom: 100px;
+  padding-bottom: 100px;
+  border-bottom: 2px solid gray;
+`;
+
+const FormMainTraining = styled.form`
+  /* border: 2px solid red; */
+`;
+
+const Option = styled.option``;
+
+const Select = styled.select`
+  width: 400px;
+  margin-bottom: 30px;
+  height: 30px;
+  border: 2px solid gray;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: gray;
+    color: white;
+    transition: 300ms;
+  }
+`;
+
+const H1 = styled.h1`
+  margin-bottom: 20px;
+  font-size: 25px;
 `;
 
 export default Workout;

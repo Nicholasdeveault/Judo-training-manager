@@ -2,7 +2,16 @@
 
 const express = require("express");
 const morgan = require("morgan");
-const { getExercises, getAllExercises, getExercisesByType } = require("./handlers");
+const {
+  getExercises,
+  getAllExercises,
+  getExercisesByType,
+  addNote,
+  getNotes,
+  listSearch,
+  addNewExercise,
+  getNewExercises,
+} = require("./handlers");
 
 const PORT = process.env.PORT || 4000;
 
@@ -13,17 +22,18 @@ express()
   .use(express.urlencoded({ extended: false }))
   .use("/", express.static(__dirname + "/"))
 
-//endpoints\
-//Login page .get()
-// .get("/Homepage",  getAllExercises) //<-- Homepage to plan the training of the day 
-.get("/Exercises", getAllExercises) //<-- page to see every exercises
-.get("/Exercises/:type", getExercisesByType) //<-- Page to search by type
-.get("/Exercises/:_id", getExercises)  //<-- Might not need this one
-//.post() --> Add new exercises to the list (STRETCH)
+  //SearchBar Endpoint
+  .use("/exercisesList", listSearch)
 
-//GOOGLE CALENDAR API GOES HERE
-//.get("/api/googleCalendar")
-
+  //endpoints\
+  //Login page .get()
+  // .get("/Homepage",  getAllExercises) //<-- Homepage to plan the training of the day
+  .get("/Exercises", getAllExercises) //<-- page to see every exercises
+  .get("/Exercises/:type", getExercisesByType) //<-- Page to search by type
+  .get("/newExercises", getNewExercises)
+  .post("/note", addNote)
+  .get("/notes", getNotes)
+  .post("/newExercise", addNewExercise)
 
   .use((req, res) => res.status(404).type("txt").send("🤷‍♂️"))
 

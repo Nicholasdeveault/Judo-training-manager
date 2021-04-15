@@ -19,7 +19,6 @@ import ExercisesType from "./ExercisesType";
 import Header from "./Header";
 import Footer from "./Footer";
 import Workout from "./Workout";
-// import ExercisesTypesArray from "./ExercisesTypesArray";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -47,11 +46,9 @@ const App = () => {
         <Switch>
           <Route exact path="/test">
             <Workout />
-            {/* <ExercisesTypesArray /> */}
           </Route>
           <Route exact path="/">
             <Homepage />
-            {/* <ExercisesTypesArray /> */}
           </Route>
           <Route exact path="/Exercises/:type">
             <ExercisesType />
