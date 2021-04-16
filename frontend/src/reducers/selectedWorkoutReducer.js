@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 
 const initialState = {
   warmUp: [],
-  principalPart: [],
+  sequence: [],
 };
 
 export default function typeReducer(state = initialState, action) {
@@ -14,7 +14,7 @@ export default function typeReducer(state = initialState, action) {
     case "add_mainpart_ex": {
       return {
         ...state,
-        principalPart: [...state.principalPart, action.payload],
+        sequence: [...state.sequence, action.payload],
       };
     }
     default: {

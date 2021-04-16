@@ -1,73 +1,57 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import moment from "moment";
+import { useDispatch, useSelector } from "react-redux";
 
 const Footer = () => {
+  const dispatch = useDispatch();
   const [userInput, setUserInput] = useState("");
-  const [newNote, setNewNote] = useState("idle");
+  const [newNote, setNewNote] = useState("");
 
   // const handleTime = () => {
-  //   {
   //     moment(newNote.timestamp).format("h:mm a • MMMM Do YYYY");
-  //   }
-  //   console.log(
-  //     "HI",
-  //     moment(newNote.timestamp).format("h:mm a • MMMM Do YYYY")
-  //   );
-  // };
+  //   };
 
-  const handleChange = (event) => {
-    setUserInput({
-      ...userInput,
-      [event.target.name]: event.target.value,
-    });
-    console.log([event.target.name]);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const input = { ...userInput, sheetId: "id" };
-
-    fetch("/note", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(userInput),
-    })
-      .then((res) => res.json())
-      .then((data) => setNewNote(data));
-
-    if ({ status: 200 }) {
-      setNewNote("");
-    }
-  };
-
-  //Need to add the Note printed out on the bottom of the page.
-
-  return newNote ? (
+  return (
     <>
-      <Form onChange={(event) => handleChange(event)}>
+      <Form>
         <Div>
           <Input
             name="note"
+            value={newNote}
             placeholder=" Add a reminder"
             type="text"
-            onChange={(event) => setUserInput(event.target.value)}
+            onChange={(event) => setNewNote(event.target.value)}
           />
-          <Button type="submit" onClick={handleSubmit}>
+          <Button
+            type="submit"
+            onClick={() => {
+              console.log(newNote);
+              const noteInfo = {
+                type: "add_note",
+                payload: {
+                  noteType: newNote,
+                  noteTime: moment(newNote.timestamp).format(
+                    "h:mm a • MMMM Do YYYY"
+                  ),
+                },
+              };
+              dispatch(noteInfo);
+            }}
+          >
             Add reminder
           </Button>
         </Div>
-        <Status userInput={userInput} />
+        <Status>{newNote}</Status>
       </Form>
     </>
-  ) : (
-    <div>Loading...</div>
+    // ) : (
+    //   <div>Loading...</div>
   );
 };
 
-const Form = styled.form`
-  height: 145px;
+const Form = styled.div`
+  /* height: 100px; */
   display: flex;
   justify-content: column;
 `;

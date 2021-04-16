@@ -10,19 +10,19 @@ import {
 import { getExercisesTypeData } from "./reducers/selectedWorkoutReducer";
 
 const Workout = () => {
-  //   const [state, dispatch] = useReducer(reducer, { isSelected: false });
   const dispatch = useDispatch();
   const exerciseSelection = useSelector((state) => state);
+  //Removed "none" from the states.
   const [warmUp, setWarmup] = useState("none");
   const [name, setName] = useState("none");
   const [name2, setName2] = useState("none");
   const [sequence, setSequence] = useState("none");
   const [warmupTime, setWarmupTime] = useState(0);
   const [time, setTime] = useState(0);
+  const [totalTime, setTotalTime] = useState(time + 0);
   const [date, setDate] = useState("");
 
   const exercises = useSelector((state) => state.exercises);
-  console.log(exercises);
 
   let types = exercises?.exercises?.map((exercise) => {
     return exercise.type;
@@ -31,24 +31,22 @@ const Workout = () => {
   let filteredTypes = types?.filter((item, index) => {
     return types?.indexOf(item) === index;
   });
-  console.log(filteredTypes);
 
   let names = exercises?.exercises?.map((exercise) => {
     return exercise.name;
   });
-  console.log(names);
 
   const cardioExercises = exercises?.exercises?.filter((exercise) => {
     return exercise.type === "Cardio";
   });
-  console.log(cardioExercises);
 
   // const handleSubmit = (event) => {
   //   return event.target.submit;
   // };
-  console.log(warmUp);
+  // console.log(warmUp);
   return exercises.status === "idle" ? (
     <>
+      {/* <BigForm> */}
       <Container>
         {/* Form for WarmUp portion */}
 
@@ -58,7 +56,6 @@ const Workout = () => {
             name="WarmUp"
             value={warmUp}
             onChange={(event) => {
-              console.log(event.target);
               setWarmup(event.target.value);
             }}
           >
@@ -94,7 +91,6 @@ const Workout = () => {
             />
             <Button
               onClick={() => {
-                console.log("Hello");
                 const exerciseInfo = {
                   type: "add_warmup_ex",
                   payload: {
@@ -110,9 +106,7 @@ const Workout = () => {
             </Button>
           </Div>
         </FormWarmUp>
-
         {/* Form for sequences */}
-
         <FormMainTraining>
           <H1>Main Training: </H1>
           <Select
@@ -151,7 +145,6 @@ const Workout = () => {
             />
             <Button
               onClick={() => {
-                console.log("Hello");
                 const exerciseInfo = {
                   type: "add_mainpart_ex",
                   payload: {
@@ -168,14 +161,20 @@ const Workout = () => {
           </Div>
         </FormMainTraining>
       </Container>
+      {/* </BigForm> */}
     </>
   ) : (
     <div>Loading...</div>
   );
 };
 
+{
+  /* const BigForm = styled.div`
+  border: 2px solid red;
+`; */
+}
+
 const Container = styled.div`
-  /* border: 2px solid blue; */
   display: flex;
   flex-direction: column;
   width: 400px;
@@ -220,9 +219,7 @@ const FormWarmUp = styled.div`
   border-bottom: 2px solid gray;
 `;
 
-const FormMainTraining = styled.div`
-  /* border: 2px solid red; */
-`;
+const FormMainTraining = styled.div``;
 
 const Option = styled.option``;
 

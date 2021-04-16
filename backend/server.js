@@ -31,8 +31,8 @@ express()
   .get("/Exercises", getAllExercises) //<-- page to see every exercises
   .get("/Exercises/:type", getExercisesByType) //<-- Page to search by type
   .get("/newExercises", getNewExercises)
-  .post("/note", addNote)
-  .get("/notes", getNotes)
+  // .post("/note", addNote)
+  // .get("/notes", getNotes)
   .post("/newExercise", addNewExercise)
 
   .use((req, res) => res.status(404).type("txt").send("🤷‍♂️"))
