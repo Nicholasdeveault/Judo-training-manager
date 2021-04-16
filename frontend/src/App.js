@@ -13,7 +13,6 @@ import {
 } from "react-router-dom";
 import styled from "styled-components";
 import GlobalStyles from "./GlobalStyles";
-import Homepage from "./Homepage";
 import AllExercises from "./Exercises";
 import ExercisesType from "./ExercisesType";
 import Header from "./Header";
@@ -44,15 +43,12 @@ const App = () => {
       <Router>
         <Header />
         <Switch>
-          <Route exact path="/test">
+          <Route exact path="/">
             <Workout />
           </Route>
-          <Route exact path="/">
-            <Homepage />
-          </Route>
-          <Route exact path="/Exercises/:type">
+          {/* <Route exact path="/Exercises/:type">
             <ExercisesType />
-          </Route>
+          </Route> */}
           <Route exact path="/Exercises">
             <AllExercises />
           </Route>

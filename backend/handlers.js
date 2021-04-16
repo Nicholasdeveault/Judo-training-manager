@@ -119,24 +119,29 @@ const addNewExercise = async (req, res) => {
   client.close();
 };
 
+//Remove an exercise from the exercises list
+
+const removeExercises = async (req, res) => {};
+
 const getNewExercises = async (req, res) => {};
 
 //Search an exercise in the list
 
-const listSearch = (req, res) => {
-  const filterList = exercisesList.filter((exercise) => {
-    const givenName = req.params.name.toLowerCase();
-    let exerciseIdMatch = exercises.filter((exercise) => {
-      const exerciseName = exercise.name.toLowerCase();
+const listSearch = async (req, res) => {
+  const client = await MongoClient(MONGO_URI, options);
+  console.log(req.body);
 
-      if (givenName === exerciseName || exerciseName.includes(givenName)) {
-        return exercise;
-      }
-    });
-  });
-  if (filterList) {
-    res.status(202).json({ data: filterList });
+  try {
+    await client.connect();
+
+    const db = client.db("judo-exercises");
+    const result = await db.collection("exercisesList").find().toArray();
+
+    res.status(200).json({ status: 200, data: result });
+  } catch (err) {
+    res.status(404).json({ status: 404, data: "Not Found" });
   }
+  client.close();
 };
 
 module.exports = {

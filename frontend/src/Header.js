@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import Homepage from "./Homepage";
 import Exercises from "./Exercises";
 import exercise from "./icons/exercise.jpg";
 import judo from "./icons/judo.jpg";

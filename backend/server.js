@@ -25,11 +25,9 @@ express()
   //SearchBar Endpoint
   .use("/exercisesList", listSearch)
 
-  //endpoints\
-  //Login page .get()
-  // .get("/Homepage",  getAllExercises) //<-- Homepage to plan the training of the day
+  //endpoints
   .get("/Exercises", getAllExercises) //<-- page to see every exercises
-  .get("/Exercises/:type", getExercisesByType) //<-- Page to search by type
+  // .get("/Exercises/:type", getExercisesByType) //<-- Page to search by type
   .get("/newExercises", getNewExercises)
   // .post("/note", addNote)
   // .get("/notes", getNotes)

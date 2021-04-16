@@ -45,8 +45,6 @@ const Footer = () => {
         <Status>{newNote}</Status>
       </Form>
     </>
-    // ) : (
-    //   <div>Loading...</div>
   );
 };
 

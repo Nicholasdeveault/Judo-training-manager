@@ -23,4 +23,4 @@ export default function typeReducer(state = initialState, action) {
   }
 }
 
-export const getExercisesTypeData = (state) => state.name;
+export const getExercisesTypeData = (state) => state.state;

@@ -5,11 +5,13 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { getExercisesDataArray } from "./reducers/exercisesReducer";
 import SearchBar from "./SearchBar";
+import AddBar from "./addExerciseBar";
 
 const AllExercises = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
   const exercisesData = useSelector(getExercisesDataArray);
+  const [highlight, setHighlight] = useState(undefined);
 
   // console.log(exercisesData);
 
@@ -27,12 +29,17 @@ const AllExercises = () => {
   return exercisesData ? (
     <Wrapper>
       <>
-        {/* {exercisesData.exercises && exercisesData.exercises.map((exercise) => { */}
-        {/* return  */}
+        {/* <AddBar /> */}
         <Div>
-          {/* <H1>{exercise.type}</H1> */}
-          {/* <H2>{exercise.name}</H2> */}
-          {/* <SearchBar /> */}
+          <SearchBar
+          // onClick={(suggestion) => {
+          //  style={{
+          //    background:
+          //      suggestion.name === highlight
+          //        ? "hsla(247, 0%, 69%, 0.26)"
+          //        : "transparent",
+          // }}}}
+          />
           {newExerciseArray?.map((exercise) => {
             return (
               <div>
@@ -52,8 +59,6 @@ const AllExercises = () => {
             );
           })}
         </Div>
-
-        {/* })} */}
       </>
     </Wrapper>
   ) : (
@@ -81,12 +86,9 @@ const DivExercises = styled.div`
 const Div = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 280px);
-  width: 1600px;
+  width: 1500px;
   margin: 0 auto;
   margin-top: 250px;
-  /* align-items: center; */
 `;
 
 export default AllExercises;
-
-//Add the logic for the .post(/newExercise, addNewExercise);
