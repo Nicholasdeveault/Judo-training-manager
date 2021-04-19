@@ -12,6 +12,7 @@ const {
   addNewExercise,
   getNewExercises,
   addTraining,
+  showTrainings,
 } = require("./handlers");
 
 const PORT = process.env.PORT || 4000;
@@ -39,6 +40,7 @@ express()
 
   //Endpoint to add new trainings to the Database
   .post("/Trainings", addTraining)
+  .get("/pastTrainings", showTrainings)
 
   .use((req, res) => res.status(404).type("txt").send("🤷‍♂️"))
 

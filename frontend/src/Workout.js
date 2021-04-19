@@ -63,10 +63,6 @@ const Workout = () => {
     return exercise.type === "Cardio";
   });
 
-  // const handleTime = () => {
-  //   moment(training.timestamp).format("h:mm a • MMMM Do YYYY");
-  // };
-
   return exercises.status === "idle" ? (
     <>
       <BigForm>
@@ -211,15 +207,6 @@ const Workout = () => {
           <TitleDiv>
             <H2>Today's training</H2>
             {/* {classesSelection.map((age) => { */}
-            {/* <Input
-              type="text"
-              value={groupAge}
-              name="Classes"
-              rows="1"
-              cols="2"
-              onChange={(event) => setGroupeAge(event.target.value)}
-            /> */}
-            {/* })} */}
             <DateDiv>
               <DatePicker
                 placeholderText="Select Training Day"
@@ -233,6 +220,17 @@ const Workout = () => {
                 onChange={(date) => setEndDate(date)}
               />
             </DateDiv>
+            <AgeDiv>
+              <LabelAge for="Duration">Age group: </LabelAge>
+              <InputAge
+                type="text"
+                value={groupAge}
+                name="Classes"
+                rows="1"
+                cols="2"
+                onChange={(event) => setGroupeAge(event.target.value)}
+              />
+            </AgeDiv>
           </TitleDiv>
           <TableWarmup>
             <TrHead>
@@ -284,37 +282,6 @@ const Workout = () => {
               })}
             </TrBody>
           </TableMainpart>
-          <>
-            <ConfirmationButton
-              type="submit"
-              onClick={() => {
-                const newTraining = {
-                  type: "add_trainings",
-                  payload: {
-                    warmupType: warmUp,
-                    warmupEx: name,
-                    exTime: warmupTime,
-                    beltColors: warmupBeltColor,
-                    trainingType: sequence,
-                    trainingEx: name2,
-                    mainExTime: time,
-                    mainBeltColors: mainBeltColor,
-                    // class: groupAge,
-                    // trainingTime: moment(training.timestamp).format(
-                    //   "h:mm a • MMMM Do YYYY"
-                    // ),
-                    noteType: newNote,
-                    noteTime: moment(newNote.timestamp).format(
-                      "h:mm a • MMMM Do YYYY"
-                    ),
-                  },
-                };
-                dispatch(newTraining);
-              }}
-            >
-              Confirm today's training
-            </ConfirmationButton>
-          </>
         </Display>
 
         <Form>
@@ -359,11 +326,44 @@ const Workout = () => {
               );
             })}
           </NoteDiv>
+          <ConfirmationButton
+            type="submit"
+            onClick={() => {
+              const newTraining = {
+                type: "add_trainings",
+                payload: {
+                  warmupType: warmUp,
+                  warmupEx: name,
+                  exTime: warmupTime,
+                  beltColors: warmupBeltColor,
+                  trainingType: sequence,
+                  trainingEx: name2,
+                  mainExTime: time,
+                  mainBeltColors: mainBeltColor,
+                  class: groupAge,
+                  noteType: newNote,
+                  noteTime: moment(newNote.timestamp).format(
+                    "h:mm a • MMMM Do YYYY"
+                  ),
+                },
+              };
+              fetch("/Trainings", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(newTraining),
+              }).then((res) => res.json());
+              dispatch(newTraining);
+            }}
+          >
+            Confirm today's training
+          </ConfirmationButton>
         </Form>
       </BigForm>
     </>
   ) : (
-    <div>Loading...</div>
+    <LoadingImg src="https://www.animatedimages.org/data/media/1289/animated-judo-image-0016.gif" />
   );
 };
 
@@ -471,6 +471,21 @@ const Input = styled.input`
   width: 40px;
 `;
 
+const AgeDiv = styled.div``;
+
+const InputAge = styled.input`
+  width: 100px;
+  height: 30px;
+  margin-left: 30px;
+`;
+
+const LabelAge = styled.label`
+  color: white;
+  border-bottom: 2px solid white;
+  font-size: 20px;
+  font-weight: bold;
+`;
+
 const Div = styled.div`
   display: flex;
 `;
@@ -535,10 +550,10 @@ const Span = styled.span`
 
 const ConfirmationButton = styled.button`
   position: relative;
-  /* top: 100px; */
-  bottom: 100px;
-  left: 515px;
+  top: 900px;
+  right: 340px;
   height: 35px;
+  width: 180px;
   color: black;
   background-color: white;
   border: 2px solid #ededed;
@@ -589,12 +604,9 @@ const NoteButton = styled.button`
 `;
 
 const NoteDiv = styled.div`
-  height: 980px;
+  height: 850px;
   width: 500px;
   background-color: #ededed;
-  /* border-top: 2px solid gray; */
-  /* border-right: 2px solid gray; */
-  /* border-bottom: 2px solid gray; */
   overflow-y: scroll;
 `;
 
@@ -617,6 +629,12 @@ const DivTdNote = styled.div`
   margin-left: 20px;
   margin-right: 20px;
   margin-top: 30px;
+`;
+
+const LoadingImg = styled.img`
+  width: 220px;
+  height: 200px;
+  margin-left: 950px;
 `;
 
 export default Workout;

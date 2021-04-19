@@ -35,3 +35,8 @@ body {
     line-height: 1.5;
 }
 `;
+
+// COLORS
+
+// #d6d6d6 <-- Light Gray
+// #32a6db <-- Light Blue

@@ -164,6 +164,23 @@ const addTraining = async (req, res) => {
   client.close();
 };
 
+const showTrainings = async (req, res) => {
+  const client = await MongoClient(MONGO_URI, options);
+
+  try {
+    await client.connect();
+
+    const _id = req.params._id;
+    const db = client.db("judo-exercises");
+    const result = await db.collection("Trainings").find().toArray();
+
+    res.status(200).json({ status: 200, data: result });
+  } catch (err) {
+    res.status(404).json({ status: 404, data: "Not Found" });
+  }
+  client.close();
+};
+
 module.exports = {
   getExercises,
   getAllExercises,
@@ -174,4 +191,5 @@ module.exports = {
   addNewExercise,
   getNewExercises,
   addTraining,
+  showTrainings,
 };

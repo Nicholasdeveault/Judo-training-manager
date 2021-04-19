@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-const SearchBar = () => {
-  const [searched, setSearched] = useState("");
+const SearchBar = ({ searched, setSearched }) => {
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(0);
   const [items, setItems] = useState();
 
@@ -98,10 +97,6 @@ const SearchBar = () => {
     </>
   );
 };
-//     style={{
-//       background: suggestion.name === highlight ? "hsla(247, 0%, 69%, 0.26)"
-//         : "transparent",
-//     }}
 
 const Container = styled.div`
   margin-left: -100px;

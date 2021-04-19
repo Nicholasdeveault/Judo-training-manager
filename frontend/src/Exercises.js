@@ -11,7 +11,7 @@ const AllExercises = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
   const exercisesData = useSelector(getExercisesDataArray);
-  const [highlight, setHighlight] = useState(undefined);
+  const [searched, setSearched] = useState("");
 
   let newExerciseArray = [];
 
@@ -29,15 +29,7 @@ const AllExercises = () => {
       <>
         {/* <AddBar /> */}
         <Div>
-          <SearchBar
-          // onClick={(suggestion) => {
-          //  style={{
-          //    background:
-          //      suggestion.name === highlight
-          //        ? "hsla(247, 0%, 69%, 0.26)"
-          //        : "transparent",
-          // }}}}
-          />
+          <SearchBar searched={searched} setSearched={setSearched} />
           {newExerciseArray?.map((exercise) => {
             return (
               <div>
@@ -47,7 +39,9 @@ const AllExercises = () => {
                     if (Ex.type === exercise) {
                       return (
                         <div>
-                          <H2>{Ex.name}</H2>
+                          <H2 name={Ex.name} searched={searched}>
+                            {Ex.name}
+                          </H2>
                         </div>
                       );
                     }
@@ -60,7 +54,7 @@ const AllExercises = () => {
       </>
     </Wrapper>
   ) : (
-    <div>Loading...</div>
+    <LoadingImg src="https://www.animatedimages.org/data/media/1289/animated-judo-image-0016.gif" />
   );
 };
 
@@ -75,6 +69,31 @@ const H1 = styled.h1`
 const H2 = styled.h2`
   font-size: 18px;
   line-height: 1.8;
+  background-color: ${({ searched, name }) => {
+    if (name === searched) {
+      return "#ffca33";
+    }
+  }};
+  box-shadow: ${({ searched, name }) => {
+    if (name === searched) {
+      return "2px 4px 8px 4px lightgray";
+    }
+  }};
+  border-radius: ${({ searched, name }) => {
+    if (name === searched) {
+      return "5px";
+    }
+  }};
+  padding-left: ${({ searched, name }) => {
+    if (name === searched) {
+      return "10px";
+    }
+  }};
+  margin-right: ${({ searched, name }) => {
+    if (name === searched) {
+      return "10px";
+    }
+  }};
 `;
 
 const DivExercises = styled.div`
@@ -87,6 +106,12 @@ const Div = styled.div`
   width: 1500px;
   margin: 0 auto;
   margin-top: 250px;
+`;
+
+const LoadingImg = styled.img`
+  width: 220px;
+  height: 200px;
+  margin-left: 950px;
 `;
 
 export default AllExercises;

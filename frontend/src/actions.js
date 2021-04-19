@@ -1,43 +1,32 @@
-
 //ExercisesReducer
 export const requestExercisesInfo = () => ({
-    type: "REQUEST_EXERCISES_INFO",
-  });
-  
-  export const receiveExercisesInfo = (exercises) => ({
-    type: "RECEIVE_EXERCISES_INFO",
-    exercises,
-  });
-  
-  export const receiveExercisesInfoError = () => ({
-    type: "RECEIVE_EXERCISES_INFO_ERROR",
-  });
+  type: "REQUEST_EXERCISES_INFO",
+});
 
+export const receiveExercisesInfo = (exercises) => ({
+  type: "RECEIVE_EXERCISES_INFO",
+  exercises,
+});
+
+export const receiveExercisesInfoError = () => ({
+  type: "RECEIVE_EXERCISES_INFO_ERROR",
+});
 
 //WarmUpReducer
-  export const requestExercisesTypeInfo = () => ({
-    type: "REQUEST_EXERCISESTYPE_INFO",
-  });
-  
-  export const receiveExercisesTypeInfo = (type) => ({
-    type: "RECEIVE_EXERCISESTYPE_INFO",
-    type,
-  });
-  
-  export const receiveExercisesTypeInfoError = () => ({
-    type: "RECEIVE_EXERCISESTYPE_INFO_ERROR",
-  });
+export const requestExercisesTypeInfo = () => ({
+  type: "REQUEST_EXERCISESTYPE_INFO",
+});
 
-  // //PrincipalPartReducer
-  // export const requestExercisesTypeInfo = () => ({
-  //   type: "REQUEST_EXERCISESTYPE_INFO",
-  // });
-  
-  // export const receiveExercisesTypeInfo = (type) => ({
-  //   type: "RECEIVE_EXERCISESTYPE_INFO",
-  //   type,
-  // });
-  
-  // export const receiveExercisesTypeInfoError = () => ({
-  //   type: "RECEIVE_EXERCISESTYPE_INFO_ERROR",
-  // });
+export const receiveExercisesTypeInfo = (type) => ({
+  type: "RECEIVE_EXERCISESTYPE_INFO",
+  type,
+});
+
+export const receiveExercisesTypeInfoError = () => ({
+  type: "RECEIVE_EXERCISESTYPE_INFO_ERROR",
+});
+
+export const removeItem = (item) => ({
+  type: "REMOVE_ITEM",
+  item,
+});
