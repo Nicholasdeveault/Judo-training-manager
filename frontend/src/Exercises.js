@@ -13,8 +13,6 @@ const AllExercises = () => {
   const exercisesData = useSelector(getExercisesDataArray);
   const [highlight, setHighlight] = useState(undefined);
 
-  // console.log(exercisesData);
-
   let newExerciseArray = [];
 
   if (exercisesData.exercises) {

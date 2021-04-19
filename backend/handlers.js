@@ -144,6 +144,26 @@ const listSearch = async (req, res) => {
   client.close();
 };
 
+//Add a new training
+
+const addTraining = async (req, res) => {
+  const client = await MongoClient(MONGO_URI, options);
+  console.log(req.body);
+
+  try {
+    await client.connect();
+
+    const db = client.db("judo-exercises");
+    await db.collection("Trainings").insertOne(req.body);
+    const result = await db.collection("Trainings").find().toArray();
+
+    res.status(200).json({ status: 200, data: result });
+  } catch (err) {
+    res.status(404).json({ status: 404, data: "Not Found" });
+  }
+  client.close();
+};
+
 module.exports = {
   getExercises,
   getAllExercises,
@@ -153,4 +173,5 @@ module.exports = {
   listSearch,
   addNewExercise,
   getNewExercises,
+  addTraining,
 };

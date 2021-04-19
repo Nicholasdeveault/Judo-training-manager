@@ -1,88 +1,59 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import moment from "moment";
-import { useDispatch, useSelector } from "react-redux";
+import instagram from "./icons/instagram.jpg";
+import facebook from "./icons/facebook.jpg";
+import twitter from "./icons/twitter.jpg";
 
 const Footer = () => {
-  const dispatch = useDispatch();
-  const [userInput, setUserInput] = useState("");
-  const [newNote, setNewNote] = useState("");
-
-  // const handleTime = () => {
-  //     moment(newNote.timestamp).format("h:mm a • MMMM Do YYYY");
-  //   };
-
   return (
     <>
-      <Form>
-        <Div>
-          <Input
-            name="note"
-            value={newNote}
-            placeholder=" Add a reminder"
-            type="text"
-            onChange={(event) => setNewNote(event.target.value)}
-          />
-          <Button
-            type="submit"
-            onClick={() => {
-              console.log(newNote);
-              const noteInfo = {
-                type: "add_note",
-                payload: {
-                  noteType: newNote,
-                  noteTime: moment(newNote.timestamp).format(
-                    "h:mm a • MMMM Do YYYY"
-                  ),
-                },
-              };
-              dispatch(noteInfo);
-            }}
-          >
-            Add reminder
-          </Button>
-        </Div>
-        <Status>{newNote}</Status>
-      </Form>
+      <FooterDiv>
+        <Div1>
+          <P>© 2021. Hibagon Judo Trainings. All Rights Reserved.</P>
+          <Link>
+            <Icon src={instagram} />
+            <Icon src={facebook} />
+            <Icon src={twitter} />
+          </Link>
+        </Div1>
+        <Div2>
+          <StyledLink>info@cjhibagon.com</StyledLink>
+          <P>419 Rue Saint-Roch</P>
+          <P>Montreal, Quebec, H3N 1K2</P>
+          <P>438-777-7112</P>
+          <StyledLink to="/contact-us">View location</StyledLink>
+        </Div2>
+      </FooterDiv>
     </>
   );
 };
 
-const Form = styled.div`
-  /* height: 100px; */
+const FooterDiv = styled.div`
   display: flex;
-  justify-content: column;
+  justify-content: center;
+  background-color: black;
+  padding: 30px;
+`;
+const Div1 = styled.div`
+  margin-right: 610px;
+`;
+const Div2 = styled.div`
+  text-align: right;
+  margin-right: 230px;
+`;
+const P = styled.p`
+  color: white;
 `;
 
-const Input = styled.input`
-  margin-left: 50px;
-  margin-right: 20px;
-  height: 30px;
-  border: 2px solid gray;
-  border-radius: 5px;
-
-  &:hover {
-    border: 2px solid black;
-  }
+const Icon = styled.img`
+  width: 25px;
+  margin: 10px;
 `;
 
-const Button = styled.button`
-  width: 100px;
-  height: 30px;
-  color: black;
-  background-color: white;
-  border: 2px solid gray;
-  border-radius: 5px;
-
-  &:hover {
-    background-color: gray;
-    color: white;
-    transition: 300ms;
-  }
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: white;
 `;
-
-const Div = styled.div``;
-
-const Status = styled.p``;
 
 export default Footer;

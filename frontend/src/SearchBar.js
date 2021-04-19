@@ -5,7 +5,6 @@ const SearchBar = () => {
   const [searched, setSearched] = useState("");
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(0);
   const [items, setItems] = useState();
-  //   const [highlight, setHighlight] = useState(undefined);
 
   useEffect(() => {
     fetch("/exercisesList")
@@ -26,6 +25,13 @@ const SearchBar = () => {
     });
   }
 
+  //   const handleSelect = items.filter((exercise) => {
+  //     return window.alert(
+  //       exercise.name &&
+  //         exercise.name.toLowerCase().includes(searched.toLowerCase())
+  //     );
+  //   });
+
   return (
     <>
       <Container>
@@ -38,6 +44,10 @@ const SearchBar = () => {
             }}
             onKeyDown={(ev) => {
               switch (ev.key) {
+                // case "Enter": {
+                //   handleSelect(searched);
+                //   return;
+                // }
                 case "ArrowUp": {
                   setSelectedSuggestionIndex(selectedSuggestionIndex - 1);
                   return;

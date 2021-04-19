@@ -11,6 +11,7 @@ const {
   listSearch,
   addNewExercise,
   getNewExercises,
+  addTraining,
 } = require("./handlers");
 
 const PORT = process.env.PORT || 4000;
@@ -29,9 +30,15 @@ express()
   .get("/Exercises", getAllExercises) //<-- page to see every exercises
   // .get("/Exercises/:type", getExercisesByType) //<-- Page to search by type
   .get("/newExercises", getNewExercises)
-  // .post("/note", addNote)
+  .post("/note", addNote)
   // .get("/notes", getNotes)
   .post("/newExercise", addNewExercise)
+  //Endpoint for sign in page
+  // .post("/", )
+  // .post("/", )
+
+  //Endpoint to add new trainings to the Database
+  .post("/Trainings", addTraining)
 
   .use((req, res) => res.status(404).type("txt").send("🤷‍♂️"))
 

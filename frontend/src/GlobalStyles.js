@@ -8,7 +8,7 @@ export default createGlobalStyle`
 }
 
 html, body, div, input, button, select, option, h1, h2, h3, h4, h5, h6, p, text {
-    font-family: "Teko", sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
 
 html, body, div, span, applet, object, iframe,
