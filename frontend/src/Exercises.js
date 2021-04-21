@@ -27,7 +27,7 @@ const AllExercises = () => {
   return exercisesData ? (
     <Wrapper>
       <>
-        {/* <AddBar /> */}
+        <AddBar />
         <Div>
           <SearchBar searched={searched} setSearched={setSearched} />
           {newExerciseArray?.map((exercise) => {
@@ -105,7 +105,7 @@ const Div = styled.div`
   grid-template-columns: repeat(5, 280px);
   width: 1500px;
   margin: 0 auto;
-  margin-top: 250px;
+  margin-top: 100px;
 `;
 
 const LoadingImg = styled.img`

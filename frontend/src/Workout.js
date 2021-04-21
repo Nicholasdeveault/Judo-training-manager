@@ -2,6 +2,7 @@ import React, { useEffect, useState, useReducer } from "react";
 import moment from "moment";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
+import { removeItem, removeMainItem } from "./actions";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useMediaQuery } from "./useMediaQuery";
@@ -25,6 +26,10 @@ const Workout = () => {
     return state.agesReducer.class;
   });
 
+  const completeTraining = useSelector((state) => {
+    return state.selectedWorkout;
+  });
+
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [newNote, setNewNote] = useState("");
@@ -37,13 +42,8 @@ const Workout = () => {
   const [warmupBeltColor, setWarmupBeltColor] = useState();
   const [mainBeltColor, setMainBeltColor] = useState();
   const [groupAge, setGroupeAge] = useState();
-  const [training, setTraining] = useState();
 
   //This is going to be for the total duration of the training (Counter)
-  // const [totalTime, setTotalTime] = useState(time + 0);
-
-  //This is going to be for the date of the training
-  // const [date, setDate] = useState("");
 
   const exercises = useSelector((state) => state.exercises);
 
@@ -239,10 +239,22 @@ const Workout = () => {
               <ThHead>Time / Belts</ThHead>
             </TrHead>
             <TrBody>
+              <Span>Warm up :</Span>
               {exerciseSelection.map((exercise) => {
                 return (
                   <>
                     <DivTd>
+                      <Xbutton
+                        onClick={() => {
+                          console.log(exercise);
+                          const removeExercise = {
+                            type: "REMOVE_ITEM",
+                          };
+                          dispatch(removeItem(exercise));
+                        }}
+                      >
+                        X
+                      </Xbutton>
                       <TdWarmup>
                         <Span>{exercise.warmupType}</Span>
                       </TdWarmup>
@@ -262,10 +274,23 @@ const Workout = () => {
           {/* Render for the main exercises section */}
           <TableMainpart>
             <TrBody>
+              <Span>Main part :</Span>
               {mainExerciseSelection.map((exercise) => {
                 return (
                   <>
                     <DivTd>
+                      <Xbutton1
+                        onClick={() => {
+                          console.log(exercise);
+                          const removeExercise = {
+                            type: "REMOVE_ITEM_MAIN",
+                          };
+                          dispatch(removeMainItem(exercise));
+                        }}
+                      >
+                        X
+                      </Xbutton1>
+
                       <TdMain>
                         <Span>{exercise.trainingType}</Span>
                       </TdMain>
@@ -330,22 +355,11 @@ const Workout = () => {
             type="submit"
             onClick={() => {
               const newTraining = {
-                type: "add_trainings",
-                payload: {
-                  warmupType: warmUp,
-                  warmupEx: name,
-                  exTime: warmupTime,
-                  beltColors: warmupBeltColor,
-                  trainingType: sequence,
-                  trainingEx: name2,
-                  mainExTime: time,
-                  mainBeltColors: mainBeltColor,
-                  class: groupAge,
-                  noteType: newNote,
-                  noteTime: moment(newNote.timestamp).format(
-                    "h:mm a • MMMM Do YYYY"
-                  ),
-                },
+                completeTraining,
+                noteType: newNote,
+                noteTime: moment(newNote.timestamp).format(
+                  "h:mm a • MMMM Do YYYY"
+                ),
               };
               fetch("/Trainings", {
                 method: "POST",
@@ -354,7 +368,7 @@ const Workout = () => {
                 },
                 body: JSON.stringify(newTraining),
               }).then((res) => res.json());
-              dispatch(newTraining);
+              // dispatch(newTraining);
             }}
           >
             Confirm today's training
@@ -368,6 +382,17 @@ const Workout = () => {
 };
 
 // Training Section styling beginning
+
+const Xbutton = styled.button`
+  border: none;
+  font-weight: bold;
+`;
+
+const Xbutton1 = styled.button`
+  border: none;
+  font-weight: bold;
+  background-color: white;
+`;
 
 const TrHead = styled.tr`
   display: flex;
@@ -492,15 +517,13 @@ const Div = styled.div`
 
 const Button = styled.button`
   height: 25px;
-  color: black;
-  background-color: white;
-  border: 2px solid gray;
+  border: none;
   border-radius: 5px;
   margin-top: 50px;
+  font-weight: bold;
 
   &:hover {
-    background-color: gray;
-    color: white;
+    background-color: #ffca33;
     transition: 300ms;
   }
 `;
@@ -554,14 +577,12 @@ const ConfirmationButton = styled.button`
   right: 340px;
   height: 35px;
   width: 180px;
-  color: black;
-  background-color: white;
-  border: 2px solid #ededed;
+  border: none;
   border-radius: 5px;
+  font-weight: bold;
 
   &:hover {
-    background-color: #ededed;
-    color: black;
+    background-color: #ffca33;
     transition: 300ms;
   }
 `;
@@ -591,14 +612,13 @@ const NoteInput = styled.input`
 const NoteButton = styled.button`
   width: 110px;
   height: 30px;
-  color: black;
-  background-color: white;
-  border: 2px solid gray;
+  border: none;
   border-radius: 5px;
+  font-weight: bold;
+  background-color: white;
 
   &:hover {
-    background-color: gray;
-    color: white;
+    background-color: #ffca33;
     transition: 300ms;
   }
 `;

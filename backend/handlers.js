@@ -84,20 +84,7 @@ const addNote = async (req, res) => {
   client.close();
 };
 
-const getNotes = async (req, res) => {
-  // const client = await MongoClient(MONGO_URI, options);
-  // await client.connect();
-  // const db = client.db("judo-exercises");
-  // const result = await db.collection("NoteSection").find().toArray();
-  // const date = result.filter((date) => {
-  //   return date.date === req.params.date;
-  // });
-  // // console.log(type);
-  // date
-  //   ? res.status(200).json({ status: 200, data: date })
-  //   : res.status(404).json({ status: 404, msg: "can't find data" });
-  // client.close();
-};
+const getNotes = async (req, res) => {};
 
 //Add new exercises
 
@@ -123,7 +110,19 @@ const addNewExercise = async (req, res) => {
 
 const removeExercises = async (req, res) => {};
 
-const getNewExercises = async (req, res) => {};
+const getNewExercises = async (req, res) => {
+  const client = await MongoClient(MONGO_URI, options);
+  await client.connect();
+
+  const _id = req.params._id;
+  const db = client.db("judo-exercises");
+  db.collection("NoteSection").findOne({ _id }, (err, result) => {
+    result
+      ? res.status(200).json({ status: 200, _id, data: result })
+      : res.status(404).json({ status: 404, _id, data: "Not Found" });
+    client.close();
+  });
+};
 
 //Search an exercise in the list
 

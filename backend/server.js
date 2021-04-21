@@ -30,10 +30,11 @@ express()
   //endpoints
   .get("/Exercises", getAllExercises) //<-- page to see every exercises
   // .get("/Exercises/:type", getExercisesByType) //<-- Page to search by type
-  .get("/newExercises", getNewExercises)
+
   .post("/note", addNote)
   // .get("/notes", getNotes)
   .post("/newExercise", addNewExercise)
+  .get("/newExercises", getNewExercises)
   //Endpoint for sign in page
   // .post("/", )
   // .post("/", )

@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import instagram from "./icons/instagram.jpg";
-import facebook from "./icons/facebook.jpg";
-import twitter from "./icons/twitter.jpg";
+// import instagram from "./icons/instagram.jpg";
+// import facebook from "./icons/facebook.jpg";
+// import twitter from "./icons/twitter.jpg";
 
 const Footer = () => {
   return (
@@ -12,9 +12,9 @@ const Footer = () => {
         <Div1>
           <P>© 2021. Hibagon Judo Trainings. All Rights Reserved.</P>
           <Link>
-            <Icon src={instagram} />
-            <Icon src={facebook} />
-            <Icon src={twitter} />
+            <Icon src="icons/instagram.jpg" />
+            <Icon src="icons/facebook.jpg" />
+            <Icon src="icons/twitter.jpg" />
           </Link>
         </Div1>
         <Div2>

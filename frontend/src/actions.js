@@ -26,7 +26,12 @@ export const receiveExercisesTypeInfoError = () => ({
   type: "RECEIVE_EXERCISESTYPE_INFO_ERROR",
 });
 
-export const removeItem = (item) => ({
+export const removeItem = (exercise) => ({
   type: "REMOVE_ITEM",
-  item,
+  exercise,
+});
+
+export const removeMainItem = (exercise) => ({
+  type: "REMOVE_ITEM_MAIN",
+  exercise,
 });

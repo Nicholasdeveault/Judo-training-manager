@@ -59,8 +59,6 @@ const SearchBar = ({ searched, setSearched }) => {
             }}
           />
           <Button onClick={() => setSearched("")}>Clear</Button>
-          {/* This button to show the exercise in the list highlighted */}
-          {/* <Button onClick={() => setSearched("")}>Search</Button> */}
         </Div>
         {filteredExercises && filteredExercises.length > 0 && (
           <Ul>
@@ -118,15 +116,13 @@ const Input = styled.input`
 const Button = styled.button`
   width: 60px;
   height: 25px;
-  color: black;
-  background-color: white;
-  border: 2px solid gray;
   border-radius: 5px;
   margin-left: 40px;
+  font-weight: bold;
+  border: none;
 
   &:hover {
-    background-color: gray;
-    color: white;
+    background-color: #ffca33;
     transition: 300ms;
   }
 `;
