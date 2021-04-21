@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useMediaQuery } from "./useMediaQuery";
 
 const SearchBar = ({ searched, setSearched }) => {
+  let isDesktop = useMediaQuery("(min-width: 900px)");
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(0);
   const [items, setItems] = useState();
 
@@ -24,14 +26,7 @@ const SearchBar = ({ searched, setSearched }) => {
     });
   }
 
-  //   const handleSelect = items.filter((exercise) => {
-  //     return window.alert(
-  //       exercise.name &&
-  //         exercise.name.toLowerCase().includes(searched.toLowerCase())
-  //     );
-  //   });
-
-  return (
+  return isDesktop ? (
     <>
       <Container>
         <Div>
@@ -43,16 +38,15 @@ const SearchBar = ({ searched, setSearched }) => {
             }}
             onKeyDown={(ev) => {
               switch (ev.key) {
-                // case "Enter": {
-                //   handleSelect(searched);
-                //   return;
-                // }
                 case "ArrowUp": {
                   setSelectedSuggestionIndex(selectedSuggestionIndex - 1);
                   return;
                 }
                 case "ArrowDown": {
                   setSelectedSuggestionIndex(selectedSuggestionIndex + 1);
+                  return;
+                }
+                default: {
                   return;
                 }
               }
@@ -93,8 +87,77 @@ const SearchBar = ({ searched, setSearched }) => {
         )}
       </Container>
     </>
+  ) : (
+    <>
+      <MobileContainer>
+        <Div>
+          <Input
+            type="text"
+            value={searched}
+            onChange={(event) => {
+              setSearched(event.target.value);
+            }}
+            onKeyDown={(ev) => {
+              switch (ev.key) {
+                case "ArrowUp": {
+                  setSelectedSuggestionIndex(selectedSuggestionIndex - 1);
+                  return;
+                }
+                case "ArrowDown": {
+                  setSelectedSuggestionIndex(selectedSuggestionIndex + 1);
+                  return;
+                }
+                default: {
+                  return;
+                }
+              }
+            }}
+          />
+          <Button onClick={() => setSearched("")}>Clear</Button>
+        </Div>
+        {filteredExercises && filteredExercises.length > 0 && (
+          <Ul>
+            {filteredExercises.map((suggestion, index) => {
+              let startPosition = suggestion.name
+                .toLowerCase()
+                .indexOf(searched.toLowerCase());
+              let endPosition = startPosition + searched.length - 1;
+              let firstHalf = suggestion.name.slice(0, endPosition + 1);
+              let secondHalf = suggestion.name.slice(endPosition + 1);
+
+              const isSelected = selectedSuggestionIndex === index;
+
+              return (
+                <Suggestion
+                  key={suggestion.name}
+                  style={{
+                    background: isSelected
+                      ? "hsla(247, 0%, 69%, 0.26)"
+                      : "transparent",
+                  }}
+                  onMouseEnter={() => setSelectedSuggestionIndex(index)}
+                >
+                  <span>
+                    <Prediction1>{firstHalf}</Prediction1>
+                    <Prediction>{secondHalf}</Prediction>
+                  </span>
+                </Suggestion>
+              );
+            })}
+          </Ul>
+        )}
+      </MobileContainer>
+    </>
   );
 };
+
+//MOBILE STYLING
+
+const MobileContainer = styled.div`
+  margin-bottom: 20px;
+`;
+
+//DESKTOP STYLING
 
 const Container = styled.div`
   margin-left: -100px;

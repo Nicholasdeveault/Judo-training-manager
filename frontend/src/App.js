@@ -1,20 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import {
   requestExercisesInfo,
   receiveExercisesInfo,
   receiveExercisesInfoError,
 } from "./actions";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
-import styled from "styled-components";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import GlobalStyles from "./GlobalStyles";
 import AllExercises from "./Exercises";
-import ExercisesType from "./ExercisesType";
 import Header from "./Header";
 import Footer from "./Footer";
 import Workout from "./Workout";
@@ -22,7 +15,6 @@ import PastTrainings from "./pastTrainings";
 
 const App = () => {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state);
 
   useEffect(() => {
     dispatch(requestExercisesInfo());

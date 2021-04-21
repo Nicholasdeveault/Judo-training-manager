@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import Exercises from "./Exercises";
-// import exercise from "./icons/exercise.jpg";
-// import judo from "./icons/judo.jpg";
-// import arm from "./icons/arm.jpg";
 import { useMediaQuery } from "./useMediaQuery";
 
 const Header = () => {
@@ -81,6 +77,7 @@ const H1Wrapper = styled.div`
 const MobileWrapper = styled.div`
   background-color: black;
   display: flex;
+  margin-bottom: 40px;
 `;
 
 const Dropdown = styled.button`
@@ -91,9 +88,9 @@ const Dropdown = styled.button`
   width: 30px;
   height: 30px;
   margin-bottom: 5px;
-  margin-top: 10px;
+  margin-top: 35px;
   margin-right: 20px;
-  z-index: 1;
+  z-index: 11;
 `;
 
 const ButtonDiv = styled.div`
@@ -107,38 +104,54 @@ const MobileDiv = styled.div`
     props.dropDown ? "translatex(0%)" : "translatex(100%)"};
   transition-duration: 1s;
   position: absolute;
-  width: 50%;
-  /* display: flex;
-  flex-direction: column; */
-  background-color: green;
+  width: 100%;
+  background-color: black;
+  z-index: 9;
 `;
 
 const MobileH1 = styled.h1`
   width: 200px;
+  /* z-index: 1; */
 `;
 
 const MobileH2 = styled.h2`
   display: flex;
-  align-items: flex-end;
-  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 30px;
+  margin-right: 60px;
 `;
 
 const MobileStyledLink = styled(Link)`
   text-decoration: none;
   color: white;
   font-size: 20px;
+
+  &:focus {
+    color: #ffca33;
+  }
 `;
 
 const MobileStyledLink2 = styled(Link)`
   text-decoration: none;
   color: white;
-  margin: 5px 20px;
+  margin-top: 5px;
+  margin-left: 10px;
+
+  &:focus {
+    color: #ffca33;
+  }
 `;
 
 const MobileStyledLink3 = styled(Link)`
   text-decoration: none;
   color: white;
-  margin: 5px 20px;
+  margin-top: 5px;
+  margin-left: 10px;
+
+  &:focus {
+    color: #ffca33;
+  }
 `;
 
 const MobileLogoImg = styled.img`
@@ -150,13 +163,12 @@ const MobileLogoImg = styled.img`
 const MobileTrainingImg = styled.img`
   height: 35px;
   width: 35px;
-  margin-right: 20px;
 `;
 
 const MobilePastTrainingsImg = styled.img`
   height: 35px;
   width: 35px;
-  margin-right: 20px;
+  margin-left: 10px;
 `;
 
 //DESKTOP STYLING
