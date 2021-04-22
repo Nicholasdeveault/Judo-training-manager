@@ -1,7 +1,7 @@
 const exercisesList = require(".././backend/exercisesList.json");
 const bcrypt = require("bcrypt");
 
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 
 require("dotenv").config();
 const { MONGO_URI } = process.env;
@@ -186,39 +186,36 @@ const showTrainings = async (req, res) => {
 const getUsers = async (req, res) => {
   const client = await MongoClient(MONGO_URI, options);
 
-  try {
-    await client.connect();
-    const db = client.db("judo-exercises");
-    const data = await db.collection("NoteSection").find().toArray();
+  const _id = req.params._id;
+  console.log(req.params);
 
-    res.status(200).json({
-      status: 200,
-      data: data,
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: 404,
-      msg: err.message,
-    });
+  await client.connect();
+
+  const db = client.db("judo-exercises");
+  db.collection("Users").findOne({ _id: ObjectId(_id) }, (err, result) => {
+    result
+      ? res.status(200).json({ status: "success", _id, user: result })
+      : res.status(404).json({ status: 404, _id, msg: "Not Found" });
     client.close();
-  }
+  });
 };
 
 const createUsers = async (req, res) => {
   const client = await MongoClient(MONGO_URI, options);
 
   try {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
     await client.connect();
 
     const db = client.db("judo-exercises");
     const user = await db
-      .collection("NoteSection")
+      .collection("Users")
       .findOne({ email: req.body.email });
 
     if (!user) {
-      let response = await db.collection("NoteSection").insertOne({
+      let response = await db.collection("Users").insertOne({
         name: req.body.name,
         email: req.body.email,
         password: hashedPassword,
@@ -241,15 +238,15 @@ const loginUsers = async (req, res) => {
 
     const db = client.db("judo-exercises");
     const user = await db
-      .collection("NoteSection")
-      .findOne({ name: req.body.name });
+      .collection("Users")
+      .findOne({ email: req.body.email });
 
     if (user == null) {
       return res.status(400).json({ status: 400, data: "Cannot find user" });
     }
 
     if (await bcrypt.compare(req.body.password, user.password)) {
-      res.status(201).json({ status: 201, data: "Success" });
+      res.status(201).json({ status: 201, data: "Success", user });
     } else {
       res.status(400).json({ status: 400, data: "Not allowed" });
     }

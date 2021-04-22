@@ -39,7 +39,7 @@ express()
   //Endpoint for sign in page
   .post("/users/login", loginUsers)
   .post("/users", createUsers)
-  .get("/users", getUsers)
+  .get("/users/login/:id", getUsers)
 
   //Endpoint to add new trainings to the Database
   .post("/Trainings", addTraining)

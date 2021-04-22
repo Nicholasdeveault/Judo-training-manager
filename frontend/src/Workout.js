@@ -13,7 +13,6 @@ const Workout = () => {
   const dispatch = useDispatch();
 
   const exerciseSelection = useSelector((state) => {
-    console.log(state);
     return state.selectedWorkout.warmUp;
   });
   const mainExerciseSelection = useSelector((state) => {
@@ -249,7 +248,6 @@ const Workout = () => {
                       <DivTd>
                         <Xbutton
                           onClick={() => {
-                            console.log(exercise);
                             const removeExercise = {
                               type: "REMOVE_ITEM",
                             };
@@ -284,7 +282,6 @@ const Workout = () => {
                       <DivTd>
                         <Xbutton1
                           onClick={() => {
-                            console.log(exercise);
                             const removeExercise = {
                               type: "REMOVE_ITEM_MAIN",
                             };
@@ -324,7 +321,6 @@ const Workout = () => {
               <NoteButton
                 type="submit"
                 onClick={() => {
-                  console.log(newNote);
                   const noteInfo = {
                     type: "add_note",
                     payload: {
@@ -560,7 +556,6 @@ const Workout = () => {
                       <DivTd>
                         <Xbutton
                           onClick={() => {
-                            console.log(exercise);
                             const removeExercise = {
                               type: "REMOVE_ITEM",
                             };
@@ -595,7 +590,6 @@ const Workout = () => {
                       <DivTd>
                         <Xbutton1
                           onClick={() => {
-                            console.log(exercise);
                             const removeExercise = {
                               type: "REMOVE_ITEM_MAIN",
                             };
@@ -635,7 +629,6 @@ const Workout = () => {
               <MobileNoteButton
                 type="submit"
                 onClick={() => {
-                  console.log(newNote);
                   const noteInfo = {
                     type: "add_note",
                     payload: {
@@ -1030,6 +1023,7 @@ const Button = styled.button`
   border-radius: 5px;
   margin-top: 50px;
   font-weight: bold;
+  cursor: pointer;
 
   &:hover {
     background-color: #ffca33;
@@ -1054,6 +1048,7 @@ const Select = styled.select`
   height: 30px;
   border: 2px solid gray;
   border-radius: 5px;
+  cursor: pointer;
 
   &:hover {
     background-color: gray;
@@ -1090,6 +1085,7 @@ const ConfirmationButton = styled.button`
   border: none;
   border-radius: 5px;
   font-weight: bold;
+  cursor: pointer;
 
   &:hover {
     background-color: #ffca33;
@@ -1126,6 +1122,7 @@ const NoteButton = styled.button`
   border-radius: 5px;
   font-weight: bold;
   background-color: white;
+  cursor: pointer;
 
   &:hover {
     background-color: #ffca33;

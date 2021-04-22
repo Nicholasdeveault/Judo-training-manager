@@ -183,6 +183,7 @@ const Button = styled.button`
   margin-left: 40px;
   font-weight: bold;
   border: none;
+  cursor: pointer;
 
   &:hover {
     background-color: #ffca33;

@@ -4,72 +4,201 @@ import { Link } from "react-router-dom";
 import { useMediaQuery } from "./useMediaQuery";
 import SignIn from "./signIn";
 
-const Header = () => {
+const Header = ({ userInfo, setUserInfo }) => {
   let isDesktop = useMediaQuery("(min-width: 900px)");
   const [dropDown, setDropDown] = useState(false);
 
+  const handleSignOut = () => {
+    setUserInfo(null);
+    localStorage.removeItem("_id");
+  };
+  console.log(userInfo);
+
   return isDesktop ? (
-    <>
-      <Wrapper>
-        <Div>
-          <H1>
-            {/* ADD RENDER FOR WHEN SIGNED IN TO REDIRECT AND LOG OUT */}
-            <StyledLink2 to={"/workout"}>
-              <LogoImg src="icons/judo.jpg" />
-            </StyledLink2>
-            <StyledLink to={"/workout"}>Hibagon Trainings</StyledLink>
-          </H1>
-          <H2>
-            <StyledLink2 to={"/Exercises"}>
-              <TrainingImg src="icons/exercise.jpg" />
-            </StyledLink2>
-            <StyledLink to={"/Exercises"}>Exercises</StyledLink>
-            <StyledLink3 to={"/Trainings"}>
-              <PastTrainingsImg src="icons/arm.jpg" />
-            </StyledLink3>
-            <StyledLink to={"/Trainings"}>Past Trainings</StyledLink>
-          </H2>
-        </Div>
-      </Wrapper>
-    </>
+    <Container>
+      {userInfo ? (
+        <>
+          <Wrapper>
+            <Div>
+              <H1>
+                {/* ADD RENDER FOR WHEN SIGNED IN TO REDIRECT AND LOG OUT */}
+                <StyledLink2 to={"/workout"}>
+                  <LogoImg src="icons/judo.jpg" />
+                </StyledLink2>
+                <StyledLink to={"/workout"}>Hibagon Trainings</StyledLink>
+              </H1>
+              <AccountInfo>
+                <Hello>Hi, {userInfo?.name?.toLowerCase()}</Hello>
+                <SignoutLink to={"/"}>
+                  <Button onClick={handleSignOut}>Sign out</Button>
+                </SignoutLink>
+              </AccountInfo>
+              <H2>
+                <StyledLink2 to={"/Exercises"}>
+                  <TrainingImg src="icons/exercise.jpg" />
+                </StyledLink2>
+                <StyledLink to={"/Exercises"}>Exercises</StyledLink>
+                <StyledLink3 to={"/Trainings"}>
+                  <PastTrainingsImg src="icons/arm.jpg" />
+                </StyledLink3>
+                <StyledLink to={"/Trainings"}>Past Trainings</StyledLink>
+              </H2>
+            </Div>
+          </Wrapper>
+        </>
+      ) : (
+        <>
+          <Wrapper>
+            <Div>
+              <H1>
+                {/* ADD RENDER FOR WHEN SIGNED IN TO REDIRECT AND LOG OUT */}
+                <StyledLink2 to={"/workout"}>
+                  <LogoImg src="icons/judo.jpg" />
+                </StyledLink2>
+                <StyledLink to={"/workout"}>Hibagon Trainings</StyledLink>
+              </H1>
+              <H2>
+                <StyledLink2 to={"/Exercises"}>
+                  <TrainingImg src="icons/exercise.jpg" />
+                </StyledLink2>
+                <StyledLink to={"/Exercises"}>Exercises</StyledLink>
+                <StyledLink3 to={"/Trainings"}>
+                  <PastTrainingsImg src="icons/arm.jpg" />
+                </StyledLink3>
+                <StyledLink to={"/Trainings"}>Past Trainings</StyledLink>
+              </H2>
+            </Div>
+          </Wrapper>
+        </>
+      )}
+    </Container>
   ) : (
-    <>
-      <MobileWrapper>
-        <H1Wrapper>
-          <MobileStyledLink to={"/"}>
-            <MobileLogoImg src="icons/judo.jpg" />
-          </MobileStyledLink>
-          <MobileH1>
-            <MobileStyledLink to={"/"}>Hibagon Trainings</MobileStyledLink>
-          </MobileH1>
-        </H1Wrapper>
-        <ButtonDiv>
-          <Dropdown
-            onClick={() => {
-              setDropDown(!dropDown);
-            }}
-          ></Dropdown>
-        </ButtonDiv>
-        <MobileDiv dropDown={dropDown}>
-          <MobileH2>
-            <MobileStyledLink2 to={"/Exercises"}>
-              <MobileTrainingImg src="icons/exercise.jpg" />
-            </MobileStyledLink2>
-            <MobileStyledLink2 to={"/Exercises"}>Exercises</MobileStyledLink2>
-            <MobileStyledLink3 to={"/Trainings"}>
-              <MobilePastTrainingsImg src="icons/arm.jpg" />
-            </MobileStyledLink3>
-            <MobileStyledLink3 to={"/Trainings"}>
-              Past Trainings
-            </MobileStyledLink3>
-          </MobileH2>
-        </MobileDiv>
-      </MobileWrapper>
-    </>
+    <MobileContainer>
+      {userInfo ? (
+        <>
+          <MobileWrapper>
+            <H1Wrapper>
+              <MobileStyledLink to={"/"}>
+                <MobileLogoImg src="icons/judo.jpg" />
+              </MobileStyledLink>
+              <MobileH1>
+                <MobileStyledLink to={"/"}>Hibagon Trainings</MobileStyledLink>
+              </MobileH1>
+            </H1Wrapper>
+            {/* <MobileAccountInfo>
+              <MobileSignoutLink to={"/"}>
+                <MobileHello>Hi, {userInfo?.name?.toLowerCase()}</MobileHello>
+                <MobileButton onClick={handleSignOut}>Sign out</MobileButton>
+              </MobileSignoutLink>
+            </MobileAccountInfo> */}
+            <ButtonDiv>
+              <Dropdown
+                onClick={() => {
+                  setDropDown(!dropDown);
+                }}
+              ></Dropdown>
+            </ButtonDiv>
+            <MobileDiv dropDown={dropDown}>
+              <MobileAccountInfo>
+                <MobileSignoutLink to={"/"}>
+                  <MobileHello>Hi, {userInfo?.name?.toLowerCase()}</MobileHello>
+                  <MobileButton onClick={handleSignOut}>Sign out</MobileButton>
+                </MobileSignoutLink>
+              </MobileAccountInfo>
+              <MobileH2>
+                <MobileStyledLink2 to={"/Exercises"}>
+                  <MobileTrainingImg src="icons/exercise.jpg" />
+                </MobileStyledLink2>
+                <MobileStyledLink2 to={"/Exercises"}>
+                  Exercises
+                </MobileStyledLink2>
+                <MobileStyledLink3 to={"/Trainings"}>
+                  <MobilePastTrainingsImg src="icons/arm.jpg" />
+                </MobileStyledLink3>
+                <MobileStyledLink3 to={"/Trainings"}>
+                  Past Trainings
+                </MobileStyledLink3>
+              </MobileH2>
+            </MobileDiv>
+          </MobileWrapper>
+        </>
+      ) : (
+        <>
+          <MobileWrapper>
+            <H1Wrapper>
+              <MobileStyledLink to={"/"}>
+                <MobileLogoImg src="icons/judo.jpg" />
+              </MobileStyledLink>
+              <MobileH1>
+                <MobileStyledLink to={"/"}>Hibagon Trainings</MobileStyledLink>
+              </MobileH1>
+            </H1Wrapper>
+            <ButtonDiv>
+              <Dropdown
+                onClick={() => {
+                  setDropDown(!dropDown);
+                }}
+              ></Dropdown>
+            </ButtonDiv>
+            <MobileDiv dropDown={dropDown}>
+              <MobileH2>
+                <MobileStyledLink2 to={"/Exercises"}>
+                  <MobileTrainingImg src="icons/exercise.jpg" />
+                </MobileStyledLink2>
+                <MobileStyledLink2 to={"/Exercises"}>
+                  Exercises
+                </MobileStyledLink2>
+                <MobileStyledLink3 to={"/Trainings"}>
+                  <MobilePastTrainingsImg src="icons/arm.jpg" />
+                </MobileStyledLink3>
+                <MobileStyledLink3 to={"/Trainings"}>
+                  Past Trainings
+                </MobileStyledLink3>
+              </MobileH2>
+            </MobileDiv>
+          </MobileWrapper>
+        </>
+      )}
+    </MobileContainer>
   );
 };
 
 //MOBILE STYLING
+
+const MobileHello = styled.h2`
+  color: white;
+  margin-top: 10px;
+`;
+
+const MobileButton = styled.button`
+  height: 20px;
+  width: 70px;
+  border-radius: 5px;
+  font-weight: bold;
+  border: none;
+  margin-top: 10px;
+  margin-left: 10px;
+
+  &:hover {
+    background-color: #d6d6d6;
+    /* #ffca33; */
+    transition: 300ms;
+  }
+`;
+
+const MobileAccountInfo = styled.div`
+  margin-left: 25px;
+  min-width: 200px;
+`;
+
+const MobileSignoutLink = styled(Link)`
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: row;
+`;
+
+const MobileContainer = styled.div``;
 
 const H1Wrapper = styled.div`
   display: flex;
@@ -109,6 +238,7 @@ const MobileDiv = styled.div`
   z-index: 9;
   overflow-x: hidden;
   right: 0;
+  height: 100px;
 `;
 
 const MobileH1 = styled.h1`
@@ -119,8 +249,7 @@ const MobileH2 = styled.h2`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  margin-top: 30px;
-  /* margin-right: 70px; */
+  margin-top: 10px;
   width: 320px;
 `;
 
@@ -175,6 +304,38 @@ const MobilePastTrainingsImg = styled.img`
 
 //DESKTOP STYLING
 
+const SignoutLink = styled(Link)`
+  text-decoration: none;
+  color: black;
+`;
+
+const AccountInfo = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Hello = styled.h2`
+  margin-right: 30px;
+  color: white;
+  border-bottom: 2px solid white;
+`;
+
+const Button = styled.button`
+  height: 25px;
+  width: 120px;
+  border-radius: 5px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ffca33;
+    transition: 300ms;
+  }
+`;
+
+const Container = styled.div``;
+
 const StyledLink = styled(Link)`
   text-decoration: none;
   color: white;
@@ -198,6 +359,7 @@ const StyledLink3 = styled(Link)`
 const H1 = styled.h1`
   display: flex;
   align-items: center;
+  width: 300px;
 `;
 
 const H2 = styled.h2`
@@ -208,9 +370,9 @@ const H2 = styled.h2`
 const Div = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 40px;
   padding: 40px 40px;
   background-color: black;
+  margin-bottom: 60px;
 `;
 
 const Wrapper = styled.div``;

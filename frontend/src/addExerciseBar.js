@@ -74,9 +74,9 @@ const Button = styled.button`
   height: 25px;
   margin-top: 10px;
   border-radius: 5px;
-  border: 2px solid gray;
   font-weight: bold;
   border: none;
+  cursor: pointer;
 
   &:hover {
     background-color: #ffca33;

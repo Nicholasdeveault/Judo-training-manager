@@ -1,11 +1,11 @@
 const initialState = {
-  users: [],
+  currentUser: null,
 };
 
 export default function usersReducer(state = initialState, action) {
   switch (action.type) {
-    case "add_user": {
-      return { ...state, users: [...state.users, action.payload] };
+    case "authentification_user": {
+      return { ...state, currentUser: [...state.currentUsers, action.payload] };
     }
     default: {
       return state;
@@ -13,4 +13,4 @@ export default function usersReducer(state = initialState, action) {
   }
 }
 
-export const getUsersData = (state) => state.users;
+export const getUsersData = (state) => state.currentUser;
