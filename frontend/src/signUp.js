@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import Jump from "react-reveal/Jump";
 
 const SignUp = ({ userInfo, setUserInfo }) => {
   const [email, setEmail] = useState("");
@@ -38,48 +39,50 @@ const SignUp = ({ userInfo, setUserInfo }) => {
     <Container>
       <Span>柔軟性への道</Span>
       <Span>La voie de la souplesse</Span>
-      <InputWrapper>
-        <P>Create an account</P>
-        <EmailDiv>
-          <EmailInput
-            type="text"
-            name="Sign up"
-            placeholder="Email"
-            onChange={(event) => setEmail(event.target.value)}
-          />
-        </EmailDiv>
-        <NameDiv>
-          <NameInput
-            type="text"
-            name="Sign up"
-            placeholder="Name"
-            onChange={(event) => setName(event.target.value)}
-          />
-        </NameDiv>
-        <PasswordDiv>
-          <PasswordInput
-            type="password"
-            name="Sign up"
-            placeholder="Password"
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </PasswordDiv>
-        <ConfirmPasswordDiv>
-          <PasswordInput
-            type="password"
-            name="Sign up"
-            placeholder="Confirm Password"
-            onChange={(event) => setConfirmPassword(event.target.value)}
-          />
-        </ConfirmPasswordDiv>
-        <ButtonDiv>
-          <Button onClick={handleSignUp}>Sign up</Button>
-          <P>{errMessage}</P>
-        </ButtonDiv>
-        <AccountDiv>
-          Already have an account? <StyledLink to={"/"}>Sign In</StyledLink>
-        </AccountDiv>
-      </InputWrapper>
+      <Jump>
+        <InputWrapper>
+          <P>Create an account</P>
+          <EmailDiv>
+            <EmailInput
+              type="text"
+              name="Sign up"
+              placeholder="Email"
+              onChange={(event) => setEmail(event.target.value)}
+            />
+          </EmailDiv>
+          <NameDiv>
+            <NameInput
+              type="text"
+              name="Sign up"
+              placeholder="Name"
+              onChange={(event) => setName(event.target.value)}
+            />
+          </NameDiv>
+          <PasswordDiv>
+            <PasswordInput
+              type="password"
+              name="Sign up"
+              placeholder="Password"
+              onChange={(event) => setPassword(event.target.value)}
+            />
+          </PasswordDiv>
+          <ConfirmPasswordDiv>
+            <PasswordInput
+              type="password"
+              name="Sign up"
+              placeholder="Confirm Password"
+              onChange={(event) => setConfirmPassword(event.target.value)}
+            />
+          </ConfirmPasswordDiv>
+          <ButtonDiv>
+            <Button onClick={handleSignUp}>Sign up</Button>
+            <P>{errMessage}</P>
+          </ButtonDiv>
+          <AccountDiv>
+            Already have an account? <StyledLink to={"/"}>Sign In</StyledLink>
+          </AccountDiv>
+        </InputWrapper>
+      </Jump>
     </Container>
   );
 };
@@ -87,7 +90,6 @@ const SignUp = ({ userInfo, setUserInfo }) => {
 const Container = styled.div`
   height: 100vh;
   display: flex;
-  margin: auto;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -99,7 +101,6 @@ const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: absolute;
   width: 600px;
   height: 500px;
   border-radius: 5px;
@@ -111,7 +112,6 @@ const InputWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: absolute;
     max-width: 90vw;
     height: 500px;
     border-radius: 5px;
@@ -180,12 +180,12 @@ const Span = styled.span`
   font-weight: bold;
   font-size: 30px;
   position: relative;
-  bottom: 400px;
+  bottom: 120px;
   @media (max-width: 900px) {
     font-weight: bold;
     font-size: 30px;
     position: relative;
-    bottom: 330px;
+    bottom: 80px;
   }
 `;
 

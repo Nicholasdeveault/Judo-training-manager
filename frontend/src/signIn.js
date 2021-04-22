@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Jump from "react-reveal/Jump";
 
 const SignIn = ({ userInfo, setUserInfo }) => {
   const history = useHistory();
@@ -40,33 +41,35 @@ const SignIn = ({ userInfo, setUserInfo }) => {
       <Container>
         <Span>柔軟性への道</Span>
         <Span>La voie de la souplesse</Span>
-        <InputWrapper>
-          <P>Welcome</P>
-          <EmailDiv>
-            <EmailInput
-              type="text"
-              name="logIn"
-              placeholder="Email"
-              onChange={(event) => setEmail(event.target.value)}
-            />
-          </EmailDiv>
-          <PasswordDiv>
-            <PasswordInput
-              type="password"
-              name="logIn"
-              placeholder="Password"
-              onChange={(event) => setPassword(event.target.value)}
-            />
-          </PasswordDiv>
-          <ButtonDiv>
-            <Button onClick={handleSignIn}>Sign in</Button>
-          </ButtonDiv>
-          <ErrP>{errMessage}</ErrP>
-          <AccountDiv>
-            Don't have an account?{" "}
-            <StyledLink to={"/signup"}>Sign Up</StyledLink>
-          </AccountDiv>
-        </InputWrapper>
+        <Jump>
+          <InputWrapper>
+            <P>Welcome</P>
+            <EmailDiv>
+              <EmailInput
+                type="text"
+                name="logIn"
+                placeholder="Email"
+                onChange={(event) => setEmail(event.target.value)}
+              />
+            </EmailDiv>
+            <PasswordDiv>
+              <PasswordInput
+                type="password"
+                name="logIn"
+                placeholder="Password"
+                onChange={(event) => setPassword(event.target.value)}
+              />
+            </PasswordDiv>
+            <ButtonDiv>
+              <Button onClick={handleSignIn}>Sign in</Button>
+            </ButtonDiv>
+            <ErrP>{errMessage}</ErrP>
+            <AccountDiv>
+              Don't have an account?{" "}
+              <StyledLink to={"/signup"}>Sign Up</StyledLink>
+            </AccountDiv>
+          </InputWrapper>{" "}
+        </Jump>
       </Container>
     </>
   );
@@ -75,7 +78,6 @@ const SignIn = ({ userInfo, setUserInfo }) => {
 const Container = styled.div`
   height: 100vh;
   display: flex;
-  margin: auto;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -87,7 +89,6 @@ const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: absolute;
   width: 600px;
   height: 400px;
   border-radius: 5px;
@@ -99,7 +100,6 @@ const InputWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: absolute;
     max-width: 90vw;
     height: 400px;
     border-radius: 5px;
@@ -154,12 +154,12 @@ const Span = styled.span`
   font-weight: bold;
   font-size: 30px;
   position: relative;
-  bottom: 400px;
+  bottom: 220px;
   @media (max-width: 900px) {
     font-weight: bold;
     font-size: 30px;
     position: relative;
-    bottom: 320px;
+    bottom: 100px;
   }
 `;
 

@@ -5,9 +5,14 @@ import { useMediaQuery } from "./useMediaQuery";
 const PastTrainings = () => {
   let isDesktop = useMediaQuery("(min-width: 900px)");
   const [oldTrainings, setOldTrainings] = useState();
-  const [searched, setSearched] = useState("");
+  //Pagination
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(1);
 
   useEffect(() => {
+    // const fetchPosts = async () => {}
     fetch("/pastTrainings")
       .then((res) => res.json())
       .then((data) => {
@@ -464,7 +469,7 @@ const Span = styled.span`
 const LoadingImg = styled.img`
   width: 220px;
   height: 200px;
-  margin-left: 950px;
+  margin-left: 750px;
 `;
 
 export default PastTrainings;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "./useMediaQuery";
-import SignIn from "./signIn";
+import Fade from "react-reveal/Fade";
 
 const Header = ({ userInfo, setUserInfo }) => {
   let isDesktop = useMediaQuery("(min-width: 900px)");
@@ -28,10 +28,12 @@ const Header = ({ userInfo, setUserInfo }) => {
                 <StyledLink to={"/workout"}>Hibagon Trainings</StyledLink>
               </H1>
               <AccountInfo>
-                <Hello>Hi, {userInfo?.name?.toLowerCase()}</Hello>
-                <SignoutLink to={"/"}>
-                  <Button onClick={handleSignOut}>Sign out</Button>
-                </SignoutLink>
+                <Fade top>
+                  <Hello>Hi, {userInfo?.name?.toLowerCase()}</Hello>
+                  <SignoutLink to={"/"}>
+                    <Button onClick={handleSignOut}>Sign out</Button>
+                  </SignoutLink>
+                </Fade>
               </AccountInfo>
               <H2>
                 <StyledLink2 to={"/Exercises"}>
@@ -85,12 +87,6 @@ const Header = ({ userInfo, setUserInfo }) => {
                 <MobileStyledLink to={"/"}>Hibagon Trainings</MobileStyledLink>
               </MobileH1>
             </H1Wrapper>
-            {/* <MobileAccountInfo>
-              <MobileSignoutLink to={"/"}>
-                <MobileHello>Hi, {userInfo?.name?.toLowerCase()}</MobileHello>
-                <MobileButton onClick={handleSignOut}>Sign out</MobileButton>
-              </MobileSignoutLink>
-            </MobileAccountInfo> */}
             <ButtonDiv>
               <Dropdown
                 onClick={() => {
@@ -181,7 +177,6 @@ const MobileButton = styled.button`
 
   &:hover {
     background-color: #d6d6d6;
-    /* #ffca33; */
     transition: 300ms;
   }
 `;
@@ -312,6 +307,7 @@ const SignoutLink = styled(Link)`
 const AccountInfo = styled.div`
   display: flex;
   align-items: center;
+  justify-content: flex-start;
 `;
 
 const Hello = styled.h2`
