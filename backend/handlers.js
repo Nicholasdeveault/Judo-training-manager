@@ -1,4 +1,5 @@
 const exercisesList = require(".././backend/exercisesList.json");
+const bcrypt = require("bcrypt");
 
 const { MongoClient } = require("mongodb");
 
@@ -96,11 +97,11 @@ const addNewExercise = async (req, res) => {
     await client.connect();
 
     const db = client.db("judo-exercises");
-    await db.collection("NoteSection").insertOne(req.body);
-    const result = await db.collection("NoteSection").find().toArray();
+    await db.collection("exercisesList").insertOne(req.body);
 
-    res.status(200).json({ status: 200, data: result });
+    res.status(201).json({ status: 201 });
   } catch (err) {
+    console.log(err.stack);
     res.status(404).json({ status: 404, data: "Not Found" });
   }
   client.close();
@@ -180,6 +181,84 @@ const showTrainings = async (req, res) => {
   client.close();
 };
 
+//SIGN IN HANDLERS
+
+const getUsers = async (req, res) => {
+  const client = await MongoClient(MONGO_URI, options);
+
+  try {
+    await client.connect();
+    const db = client.db("judo-exercises");
+    const data = await db.collection("NoteSection").find().toArray();
+
+    res.status(200).json({
+      status: 200,
+      data: data,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 404,
+      msg: err.message,
+    });
+    client.close();
+  }
+};
+
+const createUsers = async (req, res) => {
+  const client = await MongoClient(MONGO_URI, options);
+
+  try {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+    await client.connect();
+
+    const db = client.db("judo-exercises");
+    const user = await db
+      .collection("NoteSection")
+      .findOne({ email: req.body.email });
+
+    if (!user) {
+      let response = await db.collection("NoteSection").insertOne({
+        name: req.body.name,
+        email: req.body.email,
+        password: hashedPassword,
+      });
+      res.status(201).json({ status: 201, user: response.ops[0] });
+    } else {
+      res.status(400).json({ status: "not allowed" });
+    }
+  } catch (err) {
+    res.status(500).json({ status: 500, msg: "Not Found" });
+  }
+  client.close();
+};
+
+const loginUsers = async (req, res) => {
+  const client = await MongoClient(MONGO_URI, options);
+
+  try {
+    await client.connect();
+
+    const db = client.db("judo-exercises");
+    const user = await db
+      .collection("NoteSection")
+      .findOne({ name: req.body.name });
+
+    if (user == null) {
+      return res.status(400).json({ status: 400, data: "Cannot find user" });
+    }
+
+    if (await bcrypt.compare(req.body.password, user.password)) {
+      res.status(201).json({ status: 201, data: "Success" });
+    } else {
+      res.status(400).json({ status: 400, data: "Not allowed" });
+    }
+  } catch (err) {
+    res.status(500).json({ status: 500, msg: "Not Found" });
+  }
+  client.close();
+};
+
 module.exports = {
   getExercises,
   getAllExercises,
@@ -191,4 +270,7 @@ module.exports = {
   getNewExercises,
   addTraining,
   showTrainings,
+  getUsers,
+  createUsers,
+  loginUsers,
 };

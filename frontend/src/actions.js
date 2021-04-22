@@ -35,3 +35,18 @@ export const removeMainItem = (exercise) => ({
   type: "REMOVE_ITEM_MAIN",
   exercise,
 });
+
+//USERS REDUCER
+
+export const requestUsersInfo = () => ({
+  type: "REQUEST_USERS_INFO",
+});
+
+export const receiveUsersInfo = (users) => ({
+  type: "RECEIVE_USERS_INFO",
+  users,
+});
+
+export const receiveUsersInfoError = () => ({
+  type: "RECEIVE_USERS_INFO_ERROR",
+});

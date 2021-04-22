@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "./useMediaQuery";
+import SignIn from "./signIn";
 
 const Header = () => {
   let isDesktop = useMediaQuery("(min-width: 900px)");
@@ -12,10 +13,11 @@ const Header = () => {
       <Wrapper>
         <Div>
           <H1>
-            <StyledLink2 to={"/"}>
+            {/* ADD RENDER FOR WHEN SIGNED IN TO REDIRECT AND LOG OUT */}
+            <StyledLink2 to={"/workout"}>
               <LogoImg src="icons/judo.jpg" />
             </StyledLink2>
-            <StyledLink to={"/"}>Hibagon Trainings</StyledLink>
+            <StyledLink to={"/workout"}>Hibagon Trainings</StyledLink>
           </H1>
           <H2>
             <StyledLink2 to={"/Exercises"}>
@@ -100,18 +102,17 @@ const ButtonDiv = styled.div`
 `;
 
 const MobileDiv = styled.div`
-  transform: ${(props) =>
-    props.dropDown ? "translatex(0%)" : "translatex(100%)"};
+  width: ${(props) => (props.dropDown ? "0%" : "100%")};
   transition-duration: 1s;
   position: absolute;
-  width: 100%;
   background-color: black;
   z-index: 9;
+  overflow-x: hidden;
+  right: 0;
 `;
 
 const MobileH1 = styled.h1`
   width: 200px;
-  /* z-index: 1; */
 `;
 
 const MobileH2 = styled.h2`
@@ -119,7 +120,8 @@ const MobileH2 = styled.h2`
   align-items: center;
   justify-content: flex-end;
   margin-top: 30px;
-  margin-right: 60px;
+  /* margin-right: 70px; */
+  width: 320px;
 `;
 
 const MobileStyledLink = styled(Link)`

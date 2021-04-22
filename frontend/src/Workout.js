@@ -220,20 +220,6 @@ const Workout = () => {
             {/* Exercises Info render */}
             <TitleDiv>
               <H2>Today's training</H2>
-              {/* {classesSelection.map((age) => { */}
-              <DateDiv>
-                <DatePicker
-                  placeholderText="Select Training Day"
-                  showTimeSelect
-                  dateFormat="MMMM d, yyyy h:mmaa"
-                  selected={endDate}
-                  selectsEnd
-                  startDate={startDate}
-                  endDate={endDate}
-                  minDate={startDate}
-                  onChange={(date) => setEndDate(date)}
-                />
-              </DateDiv>
               <AgeDiv>
                 <LabelAge for="Duration">Age group: </LabelAge>
                 <InputAge
@@ -738,7 +724,7 @@ const MobileOption = styled.option``;
 
 const MobileSelect = styled.select`
   width: 400px;
-  margin-bottom: 35px;
+  margin-bottom: 45px;
   height: 30px;
   border: 2px solid gray;
   border-radius: 5px;
@@ -823,6 +809,7 @@ const MobileLabelAge = styled.label`
 const FormMobile = styled.div`
   height: 500px;
   display: flex;
+  width: 100vw;
   justify-content: column;
 `;
 
@@ -834,7 +821,6 @@ const MobileNoteInput = styled.input`
   width: 200px;
   border: 2px solid gray;
   border-radius: 5px;
-  /* overflow-wrap: break-word; */
 
   &:hover {
     border: 2px solid black;
@@ -857,11 +843,9 @@ const MobileNoteButton = styled.button`
 
 const MobileNoteDiv = styled.div`
   height: 400px;
-  width: 100vw;
-  margin-left: 180px;
+  min-width: 100vw;
   background-color: #ededed;
   overflow-y: scroll;
-  /* overflow-wrap: break-word; */
 `;
 
 const MobileDivTdNote = styled.div`
@@ -877,9 +861,9 @@ const MobileDivTdNote = styled.div`
 const MobileConfirmationButton = styled.button`
   position: relative;
   top: 430px;
-  right: 340px;
+  right: 310px;
   height: 35px;
-  width: 180px;
+  min-width: 200px;
   border: none;
   border-radius: 5px;
   font-weight: bold;
@@ -892,6 +876,7 @@ const MobileConfirmationButton = styled.button`
 
 const MobileDurationP = styled.p`
   margin-bottom: 40px;
+  margin-left: 10px;
   font-weight: bold;
   font-size: 20px;
 `;
@@ -901,6 +886,7 @@ const MobileDurationP = styled.p`
 
 const DurationP = styled.p`
   margin-bottom: 40px;
+  margin-left: 10px;
   font-weight: bold;
   font-size: 20px;
 `;
@@ -1017,12 +1003,14 @@ const Input = styled.input`
   width: 40px;
 `;
 
-const AgeDiv = styled.div``;
+const AgeDiv = styled.div`
+  margin-left: 5px;
+`;
 
 const InputAge = styled.input`
   width: 100px;
   height: 30px;
-  margin-left: 30px;
+  margin-left: 10px;
 `;
 
 const LabelAge = styled.label`
@@ -1090,6 +1078,7 @@ const H2 = styled.h2`
 
 const Span = styled.span`
   font-weight: bold;
+  margin-left: 10px;
 `;
 
 const ConfirmationButton = styled.button`

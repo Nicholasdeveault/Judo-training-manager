@@ -1,18 +1,19 @@
 "use strict";
 
+const bcrypt = require("bcrypt");
 const express = require("express");
 const morgan = require("morgan");
 const {
-  getExercises,
   getAllExercises,
-  getExercisesByType,
   addNote,
-  getNotes,
   listSearch,
   addNewExercise,
   getNewExercises,
   addTraining,
   showTrainings,
+  getUsers,
+  createUsers,
+  loginUsers,
 } = require("./handlers");
 
 const PORT = process.env.PORT || 4000;
@@ -36,8 +37,9 @@ express()
   .post("/newExercise", addNewExercise)
   .get("/newExercises", getNewExercises)
   //Endpoint for sign in page
-  // .post("/", )
-  // .post("/", )
+  .post("/users/login", loginUsers)
+  .post("/users", createUsers)
+  .get("/users", getUsers)
 
   //Endpoint to add new trainings to the Database
   .post("/Trainings", addTraining)

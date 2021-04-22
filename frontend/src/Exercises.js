@@ -6,7 +6,7 @@ import SearchBar from "./SearchBar";
 import AddBar from "./addExerciseBar";
 import { useMediaQuery } from "./useMediaQuery";
 
-const AllExercises = () => {
+const AllExercises = ({ refresh }) => {
   let isDesktop = useMediaQuery("(min-width: 900px)");
   const exercisesData = useSelector(getExercisesDataArray);
   const [searched, setSearched] = useState("");
@@ -26,7 +26,7 @@ const AllExercises = () => {
     <Container>
       {exercisesData ? (
         <>
-          <AddBar />
+          <AddBar refresh={refresh} />
           <Div>
             <SearchBar searched={searched} setSearched={setSearched} />
             {newExerciseArray?.map((exercise) => {

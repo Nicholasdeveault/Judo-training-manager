@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 const AddBar = () => {
-  const [addedToList, setAddedToList] = useState();
+  const [addedToList, setAddedToList] = useState({ type: "", name: "" });
 
   const handleButtonClick = () => {
     fetch("/newExercise", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(),
+      body: JSON.stringify(addedToList),
     })
-      .then((res) => res.json)
+      .then((res) => res.json())
       .then((data) => setAddedToList(data));
   };
 
@@ -21,24 +21,28 @@ const AddBar = () => {
         <DivAddType>
           <Input
             type="text"
-            value={addedToList}
+            value={addedToList.type}
             name="newExerciseType"
             placeholder="Type"
             rows="2"
-            onChange={(event) => setAddedToList(event.target.value)}
+            onChange={(event) =>
+              setAddedToList({ ...addedToList, type: event.target.value })
+            }
           />
         </DivAddType>
         <DivAddName>
           <Input
             type="text"
-            value={addedToList}
+            value={addedToList.name}
             name="newExerciseName"
             placeholder="Name"
             rows="2"
-            onChange={(event) => setAddedToList(event.target.value)}
+            onChange={(event) =>
+              setAddedToList({ ...addedToList, name: event.target.value })
+            }
           />
         </DivAddName>
-        <Button>Add to list</Button>
+        <Button onClick={handleButtonClick}>Add to list</Button>
       </Div>
     </>
   );
@@ -61,7 +65,7 @@ const Input = styled.input`
   border: 2px solid gray;
   border-radius: 5px;
   width: 400px;
-  margin: 20px;
+  margin: 20px 0;
   height: 30px;
 `;
 
