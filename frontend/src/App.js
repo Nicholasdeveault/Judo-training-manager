@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import {
   requestExercisesInfo,
@@ -23,8 +24,8 @@ import SignUp from "./signUp";
 const App = () => {
   const [userInfo, setUserInfo] = useState(null);
   const [refresh, setRefresh] = useState();
+  const [obtainId, setObtainId] = useState(null);
   const dispatch = useDispatch();
-  //Selector
 
   useEffect(() => {
     dispatch(requestExercisesInfo());
@@ -35,33 +36,44 @@ const App = () => {
         dispatch(receiveExercisesInfo(json));
       })
       .catch((err) => {
-        console.log(err);
         dispatch(receiveExercisesInfoError());
       });
   }, [setRefresh]);
 
-  let obtainId = localStorage.getItem("_id");
   useEffect(() => {
-    console.log("BEFORE SIGN IN", obtainId);
-    fetch(`/users/login/${obtainId}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data.user);
-        setUserInfo(data.user);
-      });
+    const id = localStorage.getItem("_id");
+    setObtainId(id ? id : "NA");
+  }, []);
+
+  useEffect(() => {
+    console.log(obtainId);
+    if (obtainId && obtainId !== "NA") {
+      fetch(`/users/login/${obtainId}`)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setUserInfo(data.user);
+        });
+    }
   }, [obtainId]);
 
   return (
     <>
       <GlobalStyles />
       <Router>
-        <Header userInfo={userInfo} setUserInfo={setUserInfo} />
+        <Header
+          userInfo={userInfo}
+          setUserInfo={setUserInfo}
+          setObtainId={setObtainId}
+        />
         <Switch>
           <Route exact path="/">
             {userInfo ? (
               <Redirect to="/workout" />
-            ) : (
+            ) : obtainId === "NA" ? (
               <SignIn userInfo={userInfo} setUserInfo={setUserInfo} />
+            ) : (
+              <Loading>読み込んでいます...</Loading>
             )}
           </Route>
           <Route exact path="/signUp">
@@ -73,16 +85,16 @@ const App = () => {
           </Route>
 
           <Route exact path="/workout">
-            {userInfo ? <Workout /> : <Redirect to="/signUp" />}
+            {userInfo ? <Workout /> : <Redirect to="/" />}
           </Route>
           <Route exact path="/Trainings">
-            {userInfo ? <PastTrainings /> : <Redirect to="/signUp" />}
+            {userInfo ? <PastTrainings /> : <Redirect to="/" />}
           </Route>
           <Route exact path="/Exercises">
             {userInfo ? (
               <AllExercises refresh={refresh} />
             ) : (
-              <Redirect to="/signUp" />
+              <Redirect to="/" />
             )}
           </Route>
         </Switch>
@@ -91,5 +103,11 @@ const App = () => {
     </>
   );
 };
+
+const Loading = styled.div`
+  width: 220px;
+  height: 200px;
+  margin-left: 1200px;
+`;
 
 export default App;

@@ -4,15 +4,16 @@ import { Link } from "react-router-dom";
 import { useMediaQuery } from "./useMediaQuery";
 import Fade from "react-reveal/Fade";
 
-const Header = ({ userInfo, setUserInfo }) => {
+const Header = ({ userInfo, setUserInfo, setObtainId }) => {
   let isDesktop = useMediaQuery("(min-width: 900px)");
   const [dropDown, setDropDown] = useState(false);
 
   const handleSignOut = () => {
     setUserInfo(null);
+    setObtainId("NA");
     localStorage.removeItem("_id");
   };
-  console.log(userInfo);
+  // console.log(userInfo);
 
   return isDesktop ? (
     <Container>

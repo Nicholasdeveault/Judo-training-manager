@@ -190,14 +190,19 @@ const getUsers = async (req, res) => {
   console.log(req.params);
 
   await client.connect();
+  try {
+    const db = client.db("judo-exercises");
+    const result = await db.collection("Users").findOne({ _id: ObjectId(_id) });
 
-  const db = client.db("judo-exercises");
-  db.collection("Users").findOne({ _id: ObjectId(_id) }, (err, result) => {
+    console.log(result);
     result
       ? res.status(200).json({ status: "success", _id, user: result })
       : res.status(404).json({ status: 404, _id, msg: "Not Found" });
-    client.close();
-  });
+  } catch (err) {
+    res.status(500).json({ status: 500, _id, error: err });
+  }
+
+  client.close();
 };
 
 const createUsers = async (req, res) => {

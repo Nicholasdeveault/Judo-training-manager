@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Jump from "react-reveal/Jump";
+import HeadShake from "react-reveal/HeadShake";
 
 const SignIn = ({ userInfo, setUserInfo }) => {
   const history = useHistory();
@@ -11,11 +12,16 @@ const SignIn = ({ userInfo, setUserInfo }) => {
   const [password, setPassword] = useState("");
   const [errMessage, setErrMessage] = useState("");
 
+  const [error, setError] = useState(false);
+
   //SIGN IN FUNCTION
   const handleSignIn = (ev) => {
     ev.preventDefault();
 
-    email.includes("@") === false && setErrMessage("Invalid email or password");
+    if (email.includes("@") === false) {
+      setErrMessage("Invalid email or password");
+      setError(true);
+    }
 
     fetch("/users/login", {
       method: "POST",
@@ -31,6 +37,7 @@ const SignIn = ({ userInfo, setUserInfo }) => {
           history.push("/");
         } else {
           setErrMessage("Invalid email or password");
+          setError(true);
         }
       });
   };
@@ -63,7 +70,13 @@ const SignIn = ({ userInfo, setUserInfo }) => {
             <ButtonDiv>
               <Button onClick={handleSignIn}>Sign in</Button>
             </ButtonDiv>
-            <ErrP>{errMessage}</ErrP>
+            {error ? (
+              <HeadShake>
+                <ErrP>{errMessage}</ErrP>
+              </HeadShake>
+            ) : (
+              <ErrP>{errMessage}</ErrP>
+            )}
             <AccountDiv>
               Don't have an account?{" "}
               <StyledLink to={"/signup"}>Sign Up</StyledLink>

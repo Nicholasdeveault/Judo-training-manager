@@ -5,14 +5,8 @@ import { useMediaQuery } from "./useMediaQuery";
 const PastTrainings = () => {
   let isDesktop = useMediaQuery("(min-width: 900px)");
   const [oldTrainings, setOldTrainings] = useState();
-  //Pagination
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(1);
 
   useEffect(() => {
-    // const fetchPosts = async () => {}
     fetch("/pastTrainings")
       .then((res) => res.json())
       .then((data) => {
@@ -23,8 +17,6 @@ const PastTrainings = () => {
 
   return isDesktop ? (
     <Container>
-      {/* <SearchBar searched={searched} setSearched={setSearched} /> */}
-
       {oldTrainings ? (
         <>
           <div>
@@ -159,7 +151,7 @@ const PastTrainings = () => {
           </div>
         </>
       ) : (
-        <LoadingImg src="https://www.animatedimages.org/data/media/1289/animated-judo-image-0016.gif" />
+        <Loading>読み込んでいます...</Loading>
       )}
     </Container>
   ) : (
@@ -290,7 +282,7 @@ const PastTrainings = () => {
             })}
         </div>
       ) : (
-        <LoadingImg src="https://www.animatedimages.org/data/media/1289/animated-judo-image-0016.gif" />
+        <Loading>読み込んでいます...</Loading>
       )}
     </MobileContainer>
   );
@@ -466,7 +458,7 @@ const Span = styled.span`
   font-weight: bold;
 `;
 
-const LoadingImg = styled.img`
+const Loading = styled.div`
   width: 220px;
   height: 200px;
   margin-left: 750px;

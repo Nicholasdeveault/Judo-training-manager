@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Jump from "react-reveal/Jump";
+import HeadShake from "react-reveal/HeadShake";
 
 const SignUp = ({ userInfo, setUserInfo }) => {
   const [email, setEmail] = useState("");
@@ -10,14 +11,18 @@ const SignUp = ({ userInfo, setUserInfo }) => {
   const [name, setName] = useState("");
   const [errMessage, setErrMessage] = useState("");
 
+  const [error, setError] = useState(false);
+
   //SIGN UP FUNTION
   const handleSignUp = (ev) => {
     ev.preventDefault();
 
     if (email.includes("@") === false) {
       setErrMessage("Please enter a valid email");
+      setError(true);
     } else if (password !== confirmPassword) {
       setErrMessage("Passwords don't match");
+      setError(true);
     } else {
       fetch("/users", {
         method: "POST",
@@ -30,6 +35,7 @@ const SignUp = ({ userInfo, setUserInfo }) => {
             setUserInfo(data.user);
           } else {
             setErrMessage("You already have an account");
+            setError(true);
           }
         });
     }
@@ -76,8 +82,15 @@ const SignUp = ({ userInfo, setUserInfo }) => {
           </ConfirmPasswordDiv>
           <ButtonDiv>
             <Button onClick={handleSignUp}>Sign up</Button>
-            <P>{errMessage}</P>
           </ButtonDiv>
+          {error ? (
+            <HeadShake>
+              <ErrP>{errMessage}</ErrP>
+            </HeadShake>
+          ) : (
+            <ErrP>{errMessage}</ErrP>
+          )}
+
           <AccountDiv>
             Already have an account? <StyledLink to={"/"}>Sign In</StyledLink>
           </AccountDiv>
@@ -160,7 +173,7 @@ const Button = styled.button`
   border-radius: 5px;
   font-weight: bold;
   border: none;
-  margin-top: 20px;
+  margin-top: 10px;
   cursor: pointer;
 
   &:hover {
@@ -190,7 +203,7 @@ const Span = styled.span`
 `;
 
 const AccountDiv = styled.div`
-  margin: 30px;
+  margin: 10px;
   font-weight: bold;
   @media (max-width: 900px) {
     margin: 15px 0;
@@ -202,6 +215,11 @@ const StyledLink = styled(Link)`
   text-decoration: none;
   color: black;
   border-bottom: 2px solid black;
+`;
+
+const ErrP = styled.p`
+  font-weight: bold;
+  margin-top: 5px;
 `;
 
 export default SignUp;

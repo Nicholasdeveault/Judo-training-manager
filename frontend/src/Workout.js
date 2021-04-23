@@ -42,8 +42,6 @@ const Workout = () => {
   const [mainBeltColor, setMainBeltColor] = useState();
   const [groupAge, setGroupeAge] = useState();
 
-  //This is going to be for the total duration of the training (Counter)
-
   const exercises = useSelector((state) => state.exercises);
 
   let types = exercises?.exercises?.map((exercise) => {
@@ -376,7 +374,7 @@ const Workout = () => {
           </Form>
         </>
       ) : (
-        <LoadingImg src="https://www.animatedimages.org/data/media/1289/animated-judo-image-0016.gif" />
+        <Loading>読み込んでいます...</Loading>
       )}
     </BigForm>
   ) : (
@@ -683,7 +681,7 @@ const Workout = () => {
           </FormMobile>
         </>
       ) : (
-        <LoadingImg src="https://www.animatedimages.org/data/media/1289/animated-judo-image-0016.gif" />
+        <Loading>読み込んでいます...</Loading>
       )}
     </BigFormMobile>
   );
@@ -1159,10 +1157,10 @@ const DivTdNote = styled.div`
   overflow-wrap: break-word;
 `;
 
-const LoadingImg = styled.img`
+const Loading = styled.div`
   width: 220px;
   height: 200px;
-  margin-left: 950px;
+  margin-left: 1200px;
 `;
 
 export default Workout;
